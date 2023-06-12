@@ -1,3 +1,4 @@
 main
 *.o
 linux-build
+.vscode

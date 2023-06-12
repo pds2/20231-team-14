@@ -56,12 +56,32 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
-     Classes/AppDelegate.cpp
      Classes/HelloWorldScene.cpp
+     Classes/src/baralho/baralho.cpp
+     Classes/src/baralho/maoJogador.cpp
+     Classes/src/baralho/monte.cpp
+     Classes/src/cartas/cartas.cpp
+     Classes/src/cartas/cartasEspeciais.cpp
+     Classes/src/cartas/cartasEspeciaisPretas.cpp
+     Classes/src/cartas/cartasNumericas.cpp
+     Classes/src/jogador/bot.cpp
+     Classes/src/jogador/jogador.cpp
+     Classes/src/jogador/usuario.cpp
+     Classes/AppDelegate.cpp
      )
 list(APPEND GAME_HEADER
-     Classes/AppDelegate.h
      Classes/HelloWorldScene.h
+     Classes/include/baralho/baralho.hpp
+     Classes/include/baralho/maoJogador.hpp
+     Classes/include/baralho/monte.hpp
+     Classes/include/cartas/cartas.hpp
+     Classes/include/cartas/cartasEspeciais.hpp
+     Classes/include/cartas/cartasEspeciaisPretas.hpp
+     Classes/include/cartas/cartasNumericas.hpp
+     Classes/include/jogador/bot.hpp
+     Classes/include/jogador/jogador.hpp
+     Classes/include/jogador/usuario.hpp
+     Classes/AppDelegate.h
      )
 
 if(ANDROID)
