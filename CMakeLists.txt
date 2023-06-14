@@ -57,6 +57,7 @@ endif()
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
      Classes/HelloWorldScene.cpp
+     Classes/src/interface/spriteBaralho.cpp
      Classes/src/baralho/baralho.cpp
      Classes/src/baralho/maoJogador.cpp
      Classes/src/baralho/monte.cpp
@@ -71,6 +72,7 @@ list(APPEND GAME_SOURCE
      )
 list(APPEND GAME_HEADER
      Classes/HelloWorldScene.h
+     Classes/include/interface/spriteBaralho.hpp
      Classes/include/baralho/baralho.hpp
      Classes/include/baralho/maoJogador.hpp
      Classes/include/baralho/monte.hpp

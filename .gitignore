@@ -2,3 +2,4 @@ main
 *.o
 linux-build
 .vscode
+bin
