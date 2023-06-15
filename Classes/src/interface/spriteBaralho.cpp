@@ -36,8 +36,19 @@ bool SpriteBaralho::init()
         }
         return true;
     };
+
+    auto spritecartas = SpriteFrameCache::getInstance();
+
+    spritecartas->addSpriteFramesWithFile("cartasUno.plist");
+
+    auto azul_0 = Sprite::createWithSpriteFrameName("blue_0.png");
+
+    azul_0->setAnchorPoint(Vec2(0, 0));
+    azul_0->setPosition(origin.x, origin.y);
+
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener,sprite);
     this->addChild(sprite, 0);
+    this->addChild(azul_0, 0);
 
     return true;
 }
