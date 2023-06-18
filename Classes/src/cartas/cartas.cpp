@@ -91,3 +91,7 @@ void Carta::muda_valor(unsigned int x) {
 void Carta::muda_cor(unsigned int x) {
     _cor = cor(x);
 }
+
+std::string Carta::get_sprite(){
+    return (std::to_string(_valor) + "_" + std::to_string(_cor) + ".png");
+}

@@ -56,9 +56,6 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
-     Classes/HelloWorldScene.cpp
-     Classes/src/interface/spriteBaralho.cpp
-     Classes/src/interface/spritesCartas.cpp
      Classes/src/baralho/baralho.cpp
      Classes/src/baralho/maoJogador.cpp
      Classes/src/baralho/monte.cpp
@@ -69,12 +66,11 @@ list(APPEND GAME_SOURCE
      Classes/src/jogador/bot.cpp
      Classes/src/jogador/jogador.cpp
      Classes/src/jogador/usuario.cpp
+     Classes/HelloWorldScene.cpp
+     Classes/src/interface/spriteBaralho.cpp
      Classes/AppDelegate.cpp
      )
 list(APPEND GAME_HEADER
-     Classes/HelloWorldScene.h
-     Classes/include/interface/spriteBaralho.hpp
-     Classes/include/interface/spritesCartas.hpp
      Classes/include/baralho/baralho.hpp
      Classes/include/baralho/maoJogador.hpp
      Classes/include/baralho/monte.hpp
@@ -85,6 +81,8 @@ list(APPEND GAME_HEADER
      Classes/include/jogador/bot.hpp
      Classes/include/jogador/jogador.hpp
      Classes/include/jogador/usuario.hpp
+     Classes/HelloWorldScene.h
+     Classes/include/interface/spriteBaralho.hpp
      Classes/AppDelegate.h
      )
 
