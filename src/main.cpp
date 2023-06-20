@@ -1,56 +1,86 @@
 #include <iostream>
+#include <map>
+#include "../include/monteCartasIniciais.hpp"
+#include "../include/monteCartasComer.hpp"
+#include "../include/monteCartasJogadas.hpp"
+#include "../include/maoJogador.hpp"
 
-#include "../include/jogador.hpp"
+std::vector<Carta*> criar_baralho() {
+    std::vector<Carta*> vetor_temporario;
+    for(int i=0; i<108; i++) {
+        Carta* nova_carta = new Carta(); 
+        vetor_temporario.push_back(nova_carta);
+    }
 
+    int count=0;
+    //Adicionando um zero de cada cor
+    for(int i=0; i<4; i++) {
+        vetor_temporario[count]->muda_valor(0);
+        vetor_temporario[count]->muda_cor(i);
+        count++;
+    }
+
+    //Adicionando duas cartas de cada valor, com exceção de: zero, mais quatro e curinga
+    for(int i=0; i<2; i++) {
+        for(int j=1; j<13; j++) {
+            for(int k=0; k<4; k++) {
+                vetor_temporario[count]->muda_valor(j);
+                vetor_temporario[count]->muda_cor(k);
+                count++;
+            }
+        }
+    }
+
+    //Adicionando quatro cartas de cada carta preta
+    for(int i=0; i<4; i++) {
+        for(int j=13; j<15; j++) {
+            vetor_temporario[count]->muda_valor(j);
+            vetor_temporario[count]->muda_cor(4);
+            count++;
+        }
+    }    
+
+    return vetor_temporario;
+}
+
+//Apenas para testes
 int main(){
-    //Testando as funcioanalidades do baralho:
-    Baralho baralho_teste = Baralho();
+    MonteCartasIniciais monte_inicial = MonteCartasIniciais();
+    monte_inicial.embaralhar_cartas();
 
-    baralho_teste.imprimir_baralho();
-
-    std::cout << std::endl;
-
-    Carta* carta_teste = baralho_teste.retirar_topo();  
-
-    std::cout << "Carta retirada: ";
-
-    carta_teste->imprime_carta();
+    int numero_jogadores, numero_cartas_iniciais;
+    std::cout << "Insira o numero de jogadores: ";
+    std::cin >> numero_jogadores;
+    std::cout << "Insira o numero de cartas iniciais: ";
+    std::cin >> numero_cartas_iniciais;
 
     std::cout << std::endl;
-
-    baralho_teste.imprimir_baralho();
-
+    std::cout << "O monte inicial é: " << std::endl;
+    monte_inicial.imprimir_baralho();
     std::cout << std::endl;
 
-    //Testando as funcioanalidades do jogador:
-    Carta* um = new Carta(valor(1), cor(2));
-    Carta* dois = new Carta(valor(2), cor(3));
-    Carta* tres = new Carta(valor(3), cor(1));
-    Carta* quatro = new Carta(valor(4), cor(2));
+    for(int i=0; i<numero_jogadores; i++) {
+        std::vector<Carta*> mao_atual = monte_inicial.distribuir_mao_inicial(numero_cartas_iniciais);
+        MaoJogador mao_jogador_atual = MaoJogador(numero_cartas_iniciais, mao_atual);
+        std::cout << "A mao do jogador " << i+1 << " e:" << std::endl;
+        mao_jogador_atual.imprimir_baralho();
+        std::cout << std::endl;
+    }
 
-    std::vector<Carta*> mao;
-    mao.push_back(um);
-    mao.push_back(dois);
-    mao.push_back(tres);
-    mao.push_back(quatro);
-
-    Jogador jogador_teste = Jogador(mao);
-
-    std::cout << "A mão inicial do jogador é: " << std::endl;
-    jogador_teste.imprimir_mao();
-
+    std::vector<Carta*> inicio;
+    inicio.push_back(monte_inicial.selecionar_carta_inicial());
+    MonteCartasJogadas monte_principal = MonteCartasJogadas(inicio);
+    
+    std::cout << "A carta que comeca o jogo e:" << std::endl;
+    monte_principal.imprimir_baralho();
     std::cout << std::endl;
 
-    Carta* carta_jogada = jogador_teste.jogar_carta(1);
+    MonteCartasComer monte_compras = MonteCartasComer(numero_cartas_iniciais, 
+                                                      numero_jogadores, monte_inicial.get_cartas());
 
-    std::cout << "O jogador jogou: ";
-    carta_jogada->imprime_carta();
+    std::cout << "As cartas disponiveis para compra sao:" << std::endl;
+    monte_compras.imprimir_baralho();
 
-    std::cout << std::endl;
-
-    std::cout << "A mão do jogador agora é: " << std::endl;
-    jogador_teste.imprimir_mao();
-
-    return 0;
+    monte_inicial.limpar_cartas();
 }
 
