@@ -5,6 +5,7 @@
 
 class MaoJogador : public Baralho {
     public:
+        MaoJogador();
         /*
          * @brief Constrói a mão do início de cada partida
         */

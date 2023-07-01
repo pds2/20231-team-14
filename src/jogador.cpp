@@ -1,23 +1,36 @@
 #include <iostream>
 #include "../include/jogador.hpp"
 
-Jogador::Jogador(std::vector<Carta*> mao){
-    _numero_de_cartas_na_mao = 7;
+Jogador::Jogador(unsigned int id){
+    _mao = new MaoJogador();
+    _id = id;
+}
+
+void Jogador::receber_cartas(MaoJogador* mao){
     _mao = mao;
 }
 
 void Jogador::imprimir_mao() {
-    for(Carta* c : _mao) {
+    for(Carta* c : _mao->get_cartas()) {
         c->imprime_carta();
     }
 }
 
 Carta* Jogador::jogar_carta(unsigned int indice) {
-    Carta* carta_temporaria = _mao[indice];
-    _mao.erase(_mao.begin()+indice, _mao.begin()+indice+1);
-    return carta_temporaria;
+    return _mao->jogar_carta_selecionada(indice);
 }
 
+bool Jogador::verificar_vitoria(){
+    return (_mao->get_numero_de_cartas() == 0);
+}
+
+int Jogador::get_id(){
+    return _id;
+}
+
+MaoJogador* Jogador::get_mao(){
+    return _mao;
+}
 
 
 

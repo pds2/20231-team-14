@@ -1,5 +1,7 @@
 #include "../include/maoJogador.hpp"
 
+MaoJogador::MaoJogador(){};
+
 MaoJogador::MaoJogador(unsigned int qtd_cartas_inicial, 
                        std::vector<Carta*> mao_inicial) : Baralho(qtd_cartas_inicial, mao_inicial) {};
 

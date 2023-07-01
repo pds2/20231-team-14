@@ -1,0 +1,41 @@
+#include "../include/ciclo.hpp"
+
+#include <algorithm>
+
+Ciclo::Ciclo(){
+    _indexJogador = 0;
+}
+
+void Ciclo::adicionar_jogadores(Jogador* j){
+    _jogadores.push_back(j);
+}
+
+void Ciclo::proximo_jogador(){
+    _indexJogador++;
+    if(_indexJogador >= _jogadores.size()) _indexJogador = 0;
+}
+
+Jogador* Ciclo::get_jogador_atual(){
+    return _jogadores[_indexJogador];
+}
+
+void Ciclo::inverter(){
+    Jogador* atual = get_jogador_atual();
+    std::reverse(_jogadores.begin(), _jogadores.end());
+
+    _indexJogador = 0;
+    for(Jogador* j : _jogadores){
+        if(j == atual) break;
+        _indexJogador++;
+    }
+}
+
+short Ciclo::get_index(){
+    return _indexJogador;
+}
+
+Jogador* Ciclo::get_jogador(int i){
+    for(Jogador* j : _jogadores){
+        if(j->get_id() == i) return j;
+    }
+}
