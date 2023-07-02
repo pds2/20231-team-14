@@ -14,7 +14,7 @@ class MonteCartasComer : public Baralho {
          * @brief Checa se é necessário reiniciar o monte caso as cartas tenham se esgotado.
                   Retorna 1 caso seja necessário, 0 caso contrário.
         */
-        int checar_reinicio();
+        bool checar_reinicio();
 
         /*
          * @brief Reinicia o monte, adicionando a ele, de forma embaralhada, as cartas recebidas do monte de cartas jogadas 

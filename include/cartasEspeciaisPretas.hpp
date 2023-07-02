@@ -1,7 +1,13 @@
-#ifndef UNO_CARTAS_ESPECIAIS_HPP
-#define UNO_CARTAS_ESPECIAIS_HPP
+#ifndef UNO_CARTAS_ESPECIAIS_PRETAS_HPP
+#define UNO_CARTAS_ESPECIAIS_PRETAS_HPP
 
-#include "cartas.hpp"
+#include "cartasEspeciais.hpp"
 
+class CartasEspeciaisPretas : public CartasEspeciais{
+    public:
+        bool come() override;
+        bool trocar_cor();
+        bool verificar_jogada(Carta* carta) override;
+};
 
 #endif

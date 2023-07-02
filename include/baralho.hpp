@@ -2,7 +2,11 @@
 #define UNO_BARALHO_HPP
 
 #include <vector>
+
 #include "cartas.hpp"
+#include "cartasNumericas.hpp"
+#include "cartasEspeciais.hpp"
+#include "cartasEspeciaisPretas.hpp"
 
 class Baralho {
     private:

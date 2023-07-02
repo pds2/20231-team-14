@@ -81,9 +81,12 @@ void Sistema::nova_partida(int qntd_jogadores){
             }
         }
 
-        Carta* carta = c.get_jogador_atual()->jogar_carta(indice_carta);
-        monte_principal.adicionar_carta_topo(carta);       
-        delete carta;
+        /*
+         *  Carta* carta = c.get_jogador_atual()->jogar_carta(indice_carta);
+            monte_principal.adicionar_carta_topo(carta);       
+            delete carta;
+        */
+        monte_principal.adicionar_carta_topo(c.get_jogador_atual()->jogar_carta(indice_carta));
 
         if (c.get_jogador_atual()->verificar_vitoria()) _partida_finalizada = true;
         else c.proximo_jogador();

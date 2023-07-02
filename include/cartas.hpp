@@ -1,6 +1,8 @@
 #ifndef UNO_CARTAS_HPP
 #define UNO_CARTAS_HPP
 
+//#include "../include/monteCartasJogadas.hpp"
+
 enum valor {
     N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, INVERTE_ORDEM, PULA_VEZ, MAIS_DOIS, MAIS_QUATRO, CURINGA
 };
@@ -48,7 +50,7 @@ class Carta {
          * @brief Muda a cor de uma carta de UNO
          */
         void muda_cor(unsigned int x);
-
+        //virtual bool verificar_jogada(MonteCartasJogadas);
         
 };
 
