@@ -18,5 +18,11 @@ void MonteCartasComer::reiniciar_monte(std::vector<Carta*> cartas_restantes) {
 }
 
 Carta* MonteCartasComer::comer_carta() {
-    return retirar_carta_topo();
+    std::vector<Carta*> vetor_temporario = get_cartas();
+    int tam = vetor_temporario.size();
+    Carta* ultima  = vetor_temporario[tam-1];
+    vetor_temporario.erase(vetor_temporario.begin()+tam-1);
+    alterar_cartas(vetor_temporario);
+    alterar_numero_cartas(vetor_temporario.size());
+    return ultima;
 }
