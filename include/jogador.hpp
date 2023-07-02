@@ -16,7 +16,7 @@ class Jogador {
         Jogador(unsigned int id);
         
         /*
-         * @brief recebe cartas
+         * @brief Recebe cartas
         */
         void receber_cartas(MaoJogador*);
 

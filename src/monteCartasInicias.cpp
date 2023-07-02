@@ -68,7 +68,3 @@ Carta* MonteCartasIniciais::selecionar_carta_inicial() {
     alterar_cartas(vetor_temporario);
     return carta_temporaria;
 }
-
-void MonteCartasIniciais::limpar_monte_inicial() {
-    limpar_cartas();
-}

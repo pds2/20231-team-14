@@ -1,4 +1,4 @@
-#include "..\include\sistema.hpp"
+#include "../include/sistema.hpp"
 
 #include <iostream>
 

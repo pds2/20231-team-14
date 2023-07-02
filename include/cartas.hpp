@@ -48,7 +48,6 @@ class Carta {
          * @brief Muda a cor de uma carta de UNO
          */
         void muda_cor(unsigned int x);
-
         
 };
 

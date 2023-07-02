@@ -4,7 +4,7 @@ MonteCartasComer::MonteCartasComer(unsigned int numero_cartas_iniciais, int qtd_
                                     std::vector<Carta*> cartas_restantes) : Baralho(
                                     108-(numero_cartas_iniciais*qtd_jogadores)-1, cartas_restantes) {};
 
-int MonteCartasComer::checar_reinicio() {
+bool MonteCartasComer::checar_reinicio() {
     if(get_numero_de_cartas()==0) {
         return 1;
     }
@@ -18,5 +18,11 @@ void MonteCartasComer::reiniciar_monte(std::vector<Carta*> cartas_restantes) {
 }
 
 Carta* MonteCartasComer::comer_carta() {
-    return retirar_carta_topo();
+    std::vector<Carta*> vetor_temporario = get_cartas();
+    int tam = vetor_temporario.size();
+    Carta* ultima  = vetor_temporario[tam-1];
+    vetor_temporario.erase(vetor_temporario.begin()+tam-1);
+    alterar_cartas(vetor_temporario);
+    alterar_numero_cartas(vetor_temporario.size());
+    return ultima;
 }

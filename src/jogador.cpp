@@ -11,9 +11,7 @@ void Jogador::receber_cartas(MaoJogador* mao){
 }
 
 void Jogador::imprimir_mao() {
-    for(Carta* c : _mao->get_cartas()) {
-        c->imprime_carta();
-    }
+    _mao->imprimir_baralho();
 }
 
 Carta* Jogador::jogar_carta(unsigned int indice) {
