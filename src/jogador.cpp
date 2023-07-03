@@ -19,7 +19,30 @@ void Jogador::imprimir_mao() {
     }
 }
 
-Carta* Jogador::jogar_carta(unsigned int indice) {
+Carta* Jogador::jogar_carta(unsigned int indice, Carta* carta_topo) {
+    if(indice < 0 || indice >= _mao->get_numero_de_cartas()) {
+        throw JogadaInvalida_e();
+    }
+
+    if(_mao->get_carta(indice)->get_cor() < cor(4)) {
+        if(_mao->get_carta(indice)->get_cor() != carta_topo->get_cor() 
+            && _mao->get_carta(indice)->get_valor() != carta_topo->get_valor()) {
+                throw JogadaInvalida_e();
+            }
+    }
+    return _mao->jogar_carta_selecionada(indice);
+
+}
+
+Carta* Jogador::jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga) {
+    if(indice < 0 || indice >= _mao->get_numero_de_cartas()) {
+        throw JogadaInvalida_e();
+    }
+
+    if(_mao->get_carta(indice)->get_cor() != curinga) {
+        throw JogadaInvalida_e();
+    }
+    
     return _mao->jogar_carta_selecionada(indice);
 }
 

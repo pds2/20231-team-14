@@ -4,6 +4,8 @@
 #include "baralho.hpp"
 #include "maoJogador.hpp"
 
+class JogadaInvalida_e {};
+
 class Jogador {
     private:
         unsigned int _numero_de_cartas_na_mao;
@@ -26,9 +28,16 @@ class Jogador {
         void imprimir_mao();
 
         /*
-         * @brief Joga a carta especificada pelo índice
+         * @brief Joga a carta especificada pelo índice, caso a jogada seja válida
+         * @throws Lança uma exceção caso a carta selecionada não possa ser jogada
          */
-        Carta* jogar_carta(unsigned int indice);
+        Carta* jogar_carta(unsigned int indice, Carta* carta_topo);
+
+        /*
+         * @brief Joga a carta especificada pelo índice, caso a jogada seja válida (analisando somente a cor do coringa)
+         * @throws Lança uma exceção caso a carta selecionada não possa ser jogada
+         */
+        Carta* jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga);
 
         /*
         * @brief Vence o jogo quando chegar a 0 cartas.

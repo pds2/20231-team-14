@@ -17,8 +17,6 @@ void Sistema::nova_partida(int qntd_jogadores){
     monte_inicial.embaralhar_cartas();
 
     int numero_cartas_iniciais = 7;
-    //std::cout << "\nDigite o número de cartas: ";
-    //std::cin >> numero_cartas_iniciais
 
     // Cria os jogadores e suas cartas
     for(int i = 1; i <= qntd_jogadores ; i++){
@@ -39,59 +37,134 @@ void Sistema::nova_partida(int qntd_jogadores){
     std::cout << "As cartas disponiveis para compra sao:" << std::endl;
     monte_compras.imprimir_baralho();
     std::cout << "\n-----------------------------------\n" << std::endl;
-
     std::cout << "A carta que comeca o jogo e:" << std::endl;
     monte_principal.imprimir_baralho();
     std::cout << "\n-----------------------------------\n" << std::endl;
 
     unsigned int indice_carta;
-    while(!_partida_finalizada){
+    cor cor_atual = monte_inicial.get_carta(monte_inicial.get_numero_de_cartas()-1)->get_cor();
+
+    bool curinga;
+    if(monte_inicial.get_carta(monte_inicial.get_numero_de_cartas()-1)->get_valor()!=14) {
+        curinga = false;
+    }
+    else {
+        curinga = true;
+    }
+
+    while(!_partida_finalizada) {
         std::cout << "\n-----------------------------------\n" << std::endl;
         std::cout << "\nRodada " << rodada << std::endl;
         std::cout << "\nVez do jogador " << c.get_jogador_atual()->get_id() << std::endl;
-        std::cout << "Numero de cartas: " << c.get_jogador_atual()->get_mao()->get_numero_de_cartas();
+        std::cout << "Numero de cartas: " << c.get_jogador_atual()->get_mao()->get_numero_de_cartas() << std::endl;
+        std::cout << "Cor da vez: " << cor_atual << std::endl;
         std::cout << "\nMao do jogador: \n\n";
 
         c.get_jogador_atual()->imprimir_mao();
 
         std::cout << "\n-----------------------------------\n"<< std::endl;
         std::cout << "Carta no topo: ";
-
         monte_principal.mostrar_topo()->imprime_carta();
+        std::cout << "\n-----------------------------------\n"<< std::endl;
 
+        bool jogada = true;
+        bool pular_vez = 0;
+        while(jogada) {
+            try {
+                std::cout << "(1) Jogar carta" << std::endl;
+                std::cout << "(2) Comprar carta" << std::endl << std::endl;
 
-        
-        bool jogada_valida = false;
-        /**
-         * Esse if do indice carta = 99 é apenas para finalizar a partida/testar o código mais rápido
-        */
+                int escolha;
+                std::cin >> escolha;
+                
+                while(escolha == 2) {
+                    std::vector<Carta*> vetor_temporario = c.get_jogador_atual()->get_mao()->get_cartas();
+                    vetor_temporario.push_back(monte_compras.comer_carta());
+                    c.get_jogador_atual()->get_mao()->alterar_cartas(vetor_temporario);
+                    std::cout << std::endl;
+                    std::cout << "Sua mão depois da compra é: " << std::endl;
+                    c.get_jogador_atual()->imprimir_mao();
+                    std::cout << "\n-----------------------------------\n"<< std::endl;
+                    std::cout << "Carta no topo: ";
+                    monte_principal.mostrar_topo()->imprime_carta();
+                    std::cout << "\n-----------------------------------\n"<< std::endl << std::endl;
+                    std::cout << "(1) Jogar carta" << std::endl;
+                    std::cout << "(2) Comprar carta" << std::endl << std::endl;
+                    std::cin >> escolha;
+                    std::cout << std::endl;
+                }
 
-        while(!jogada_valida){
-            std::cout << "\n\nJogue uma carta: ";
-            std::cin >> indice_carta;
-            if (indice_carta >= 0  && indice_carta < c.get_jogador_atual()->get_mao()->get_numero_de_cartas()){
-                jogada_valida = true;
-            } else if (indice_carta == 99) {
-                indice_carta = 0;
-                jogada_valida = true;
-                _partida_finalizada = true;
+                std::cout << "Digite o índice da carta que você deseja jogar: ";
+                std::cin >> indice_carta;
+                std::cout << std::endl;
+                if(curinga==false) {
+                    monte_principal.adicionar_carta_topo(c.get_jogador_atual()->jogar_carta(indice_carta, monte_principal.mostrar_topo()));
+                }
+                else {
+                    monte_principal.adicionar_carta_topo(c.get_jogador_atual()->jogar_carta_apenas_pela_cor(indice_carta, cor_atual));
+                }
+                
+                valor checar_especial = monte_principal.mostrar_topo()->get_valor();
+                switch(checar_especial) {
+                    case valor(10):
+                        c.inverter();
+                        break;
+                    case valor(11):
+                        pular_vez = true;
+                        break;
+                    case valor(12):
+                        for(int i=0; i<2; i++) {
+                            if(c.get_index() == qntd_jogadores-1) {
+                                c.get_jogador_por_indice(0)->get_mao()->comprar_carta(monte_compras.comer_carta());
+                            }
+                            else {
+                                c.get_proximo_jogador()->get_mao()->comprar_carta(monte_compras.comer_carta());
+                            }
+                        }
+                        break;
+                    case valor(13): 
+                        for(int i=0; i<4; i++) {
+                            if(c.get_index() == qntd_jogadores -1) {
+                                c.get_jogador_por_indice(0)->get_mao()->comprar_carta(monte_compras.comer_carta());
+                            }
+                            else {
+                                c.get_proximo_jogador()->get_mao()->comprar_carta(monte_compras.comer_carta());
+                            }
+                        }
+                        break;
+                }
+
+                cor checar_mudanca_de_cor = monte_principal.mostrar_topo()->get_cor();
+                if(checar_mudanca_de_cor == cor(4)) {
+                    std::cout << "(1) Vermelho " << std::endl;
+                    std::cout << "(2) Verde " << std::endl;
+                    std::cout << "(3) Azul " << std::endl;
+                    std::cout << "(4) Amarelo " << std::endl << std::endl;
+                    std::cout << "Escolha qual será a cor da vez: ";
+                    int nova_cor;
+                    std::cin >> nova_cor;
+                    cor_atual = cor(nova_cor-1);
+                    curinga = true;
+                }
+                else {
+                    cor_atual = cor(monte_principal.mostrar_topo()->get_cor());
+                    curinga = false;
+                }
+
+                jogada = false;
+            } catch (JogadaInvalida_e &e) {
+                std::cout << "Escolha uma carta válida!!!" << std::endl << std::endl;
             }
-            else {
-                std::cout << "\nJogada inválida\n";
-            }
-        }
-
-        /*
-         *  Carta* carta = c.get_jogador_atual()->jogar_carta(indice_carta);
-            monte_principal.adicionar_carta_topo(carta);       
-            delete carta;
-        */
-        monte_principal.adicionar_carta_topo(c.get_jogador_atual()->jogar_carta(indice_carta));
+       }
 
         if (c.get_jogador_atual()->verificar_vitoria()) _partida_finalizada = true;
-        else c.proximo_jogador();
+        c.proximo_jogador();
+        if(pular_vez==true) c.proximo_jogador();
+
         rodada++;
     }
+
     std::cout << "\n\nPartida finalizada!\n\n";
     std::cout << "Vencedor: Jogador " << c.get_index();
 }
+       

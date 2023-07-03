@@ -38,7 +38,7 @@ class Ciclo {
         /*
          * @brief Retorna o próximo jogador
         */        
-        Jogador get_proximo_jogador();
+        Jogador* get_proximo_jogador();
 
         /*
          * @brief Retorna o index
@@ -49,6 +49,11 @@ class Ciclo {
          * @brief Retorna o jogador "n" do vetor
         */
         Jogador* get_jogador(int);
+
+        /*
+         * @brief Retorna o jogador posicionado em determinado índice do vetor
+        */
+        Jogador* get_jogador_por_indice(int indice);
 };
 
 #endif

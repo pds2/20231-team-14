@@ -2,7 +2,6 @@
 #define UNO_CARTAS_NUMERICAS_HPP
 
 #include "cartas.hpp"
-//#include "monteCartasJogadas.hpp"
 
 class CartasNumericas : public Carta{
     public:
