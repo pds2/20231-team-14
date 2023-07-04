@@ -1,5 +1,5 @@
 #include "../../include/jogador/bot.hpp"
-
+/*
 Bot::Bot(int botID){
     this->botID = botID;
 }
@@ -9,7 +9,7 @@ Bot::Bot(){
 }
 
 void Bot::criaBot(cocos2d::Size visibleSize, cocos2d::Vec2 origin){
-        /* Implementação bots */
+        /* Implementação bots 
     double posicao_bot_x;
     double posicao_bot_y;
     bool variacao_x;
@@ -71,6 +71,5 @@ void Bot::jogarCartaInterface(){
             (*iterator_bot)->setPosition(posicao_bot_x, posicao_bot_y + posicao_bot_carta * (*iterator_bot)->getContentSize().width);
         }
              posicao_bot_carta++;
-         }
+         }}
          */
-}
