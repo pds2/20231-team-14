@@ -68,6 +68,10 @@ std::vector<Carta*> criar_monte_inicial() {
 MonteCartasIniciais::MonteCartasIniciais() : Baralho(108, criar_monte_inicial()) {};
 
 std::vector<Carta*> MonteCartasIniciais::distribuir_mao_inicial(unsigned int qtd_cartas_iniciais) {
+    if(qtd_cartas_iniciais > 108) {
+        throw NumeroCartasInvalido_e();
+    }
+    
     std::vector<Carta*> vetor_temporario = get_cartas();
     std::vector<Carta*> mao;
     for(int i=0; i<(int)qtd_cartas_iniciais; i++) {

@@ -30,6 +30,9 @@ std::vector<Carta*> Baralho::get_cartas() {
 }
 
 Carta* Baralho::get_carta(unsigned int indice) {
+    if(indice >= _cartas.size()) {
+        throw IndiceInvalido_e();
+    }
     return _cartas[indice];
 }   
 
@@ -40,16 +43,17 @@ void Baralho::imprimir_baralho() {
 }
 
 void Baralho::alterar_numero_cartas(unsigned int novo_numero) {
+    if(novo_numero > 108) {
+        throw NumeroCartasInvalido_e();
+    }
     _numero_de_cartas = novo_numero;
 }
-
 
 void Baralho::alterar_cartas(std::vector<Carta*> novas_cartas) {
     _cartas.clear();
     _cartas = novas_cartas;
     _numero_de_cartas = novas_cartas.size();
 }
-
 
 void Baralho::embaralhar_cartas() {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();

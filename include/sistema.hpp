@@ -8,6 +8,8 @@
 #include "ciclo.hpp"
 #include "jogador.hpp"
 
+class PartidaInvalida_e {};
+
 class Sistema{
     private:
         bool _partida_finalizada;
@@ -29,6 +31,7 @@ class Sistema{
 
         /*
         * @brief O jogo em si. Gerencia a ordem dos jogadores, jogadas de cartas e verifica se alguem venceu a partida
+          @throws Lança uma exceção caso a quantidade de jogadores seja negativa/maior do que 9 ou o número de cartas seja insuficiente
         */
         void nova_partida(int qntd_jogadores, int qntd_cartas_iniciais);
 };

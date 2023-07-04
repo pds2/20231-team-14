@@ -12,6 +12,7 @@ class MonteCartasIniciais : public Baralho {
 
         /*
          * @brief Distribui uma mão inicial para um jogador 
+           @throws Lança uma exceção caso não existam cartas suficientes para serem distribuídas
          */
         std::vector<Carta*> distribuir_mao_inicial(unsigned int qtd_cartas_iniciais);
 

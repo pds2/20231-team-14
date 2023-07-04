@@ -17,6 +17,7 @@ class MaoJogador : public Baralho {
 
         /*
          * @brief Retira da mão a carta com o índice especificado
+           @throws Lança uma exceção caso não exista uma carta com o índice indicado
         */
         Carta* jogar_carta_selecionada(unsigned int indice);
 

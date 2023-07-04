@@ -17,6 +17,11 @@ MonteCartasIniciais Sistema::preparar_monte_inicial() {
 }
 
 void Sistema::nova_partida(int qntd_jogadores, int qntd_cartas_iniciais){
+    if(qntd_jogadores < 0 || qntd_jogadores > 9 
+       || qntd_cartas_iniciais <= 0|| qntd_cartas_iniciais > 108) {
+        throw PartidaInvalida_e {};
+    }
+
     Ciclo c = Ciclo();
     MonteCartasIniciais monte_inicial = this->preparar_monte_inicial();
 
@@ -76,11 +81,10 @@ void Sistema::nova_partida(int qntd_jogadores, int qntd_cartas_iniciais){
                 
                 while(escolha == 2) {
                     //Reiniciando o monte de compras caso ele se esgote
-                    if(monte_compras.get_numero_de_cartas()==0) {
+                    if(monte_compras.checar_reinicio()) {
                         std::vector<Carta*> vetor_temporario_1 = monte_principal.get_cartas();
                         vetor_temporario_1.pop_back();
-                        monte_compras.alterar_cartas(vetor_temporario_1);
-                        monte_compras.embaralhar_cartas();
+                        monte_compras.reiniciar_monte(vetor_temporario_1);
 
                         Carta* carta_topo = monte_principal.get_carta(monte_principal.get_numero_de_cartas()-1);
                         std::vector<Carta*> vetor_temporario_2;
