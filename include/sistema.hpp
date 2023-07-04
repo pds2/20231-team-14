@@ -13,19 +13,24 @@ class Sistema{
         bool _partida_finalizada;
     public:
         /*
-         * @brief Constroi um sistema e seta "_partida_finalizada" = false.
+         * @brief Constroi um sistema e seta "_partida_finalizada" = false
         */
         Sistema();
 
         /*
-         * @brief Seta "_partida_finalizada" = true.
+         * @brief Seta "_partida_finalizada" = true
         */
         void finalizar_partida();
-        
+
+        /*
+         * @brief Prepara um monte já embaralhado para começar a partida 
+        */
+        MonteCartasIniciais preparar_monte_inicial();
+
         /*
         * @brief O jogo em si. Gerencia a ordem dos jogadores, jogadas de cartas e verifica se alguem venceu a partida
         */
-        void nova_partida(int qntd_jogadores);
+        void nova_partida(int qntd_jogadores, int qntd_cartas_iniciais);
 };
 
 #endif

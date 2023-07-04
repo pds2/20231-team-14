@@ -6,6 +6,12 @@ Ciclo::Ciclo(){
     _indexJogador = 0;
 }
 
+Ciclo::~Ciclo() {
+    for(Jogador* j : _jogadores) {
+        delete j;
+    }
+}
+
 void Ciclo::adicionar_jogadores(Jogador* j){
     _jogadores.push_back(j);
 }

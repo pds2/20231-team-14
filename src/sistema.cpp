@@ -10,42 +10,41 @@ void Sistema::finalizar_partida(){
     _partida_finalizada = true;
 }
 
-void Sistema::nova_partida(int qntd_jogadores){
-    Ciclo c = Ciclo();
-
+MonteCartasIniciais Sistema::preparar_monte_inicial() {
     MonteCartasIniciais monte_inicial = MonteCartasIniciais();
     monte_inicial.embaralhar_cartas();
+    return monte_inicial;
+}
 
-    int numero_cartas_iniciais = 7;
+void Sistema::nova_partida(int qntd_jogadores, int qntd_cartas_iniciais){
+    Ciclo c = Ciclo();
+    MonteCartasIniciais monte_inicial = this->preparar_monte_inicial();
 
     // Cria os jogadores e suas cartas
     for(int i = 1; i <= qntd_jogadores ; i++){
-        std::vector<Carta*> mao_atual = monte_inicial.distribuir_mao_inicial(numero_cartas_iniciais);
+        std::vector<Carta*> mao_atual = monte_inicial.distribuir_mao_inicial(qntd_cartas_iniciais);
         c.adicionar_jogadores(new Jogador(i));
-        c.get_jogador(i)->receber_cartas(new MaoJogador(numero_cartas_iniciais, mao_atual));
+        c.get_jogador(i)->receber_cartas(new MaoJogador(qntd_cartas_iniciais, mao_atual));
     }
-
-    std::cout << "\nIniciando partida!\n";
-    double rodada = 1;
 
     std::vector<Carta*> inicio;
     inicio.push_back(monte_inicial.selecionar_carta_inicial());
     MonteCartasJogadas monte_principal = MonteCartasJogadas(inicio);
-    
-    MonteCartasComer monte_compras = MonteCartasComer(numero_cartas_iniciais, qntd_jogadores, monte_inicial.get_cartas());
 
-    std::cout << "As cartas disponiveis para compra sao:" << std::endl;
-    monte_compras.imprimir_baralho();
-    std::cout << "\n-----------------------------------\n" << std::endl;
+    MonteCartasComer monte_compras = MonteCartasComer(qntd_cartas_iniciais, qntd_jogadores, monte_inicial.get_cartas());
+    monte_inicial.limpar_cartas();
+
+    double rodada = 1;
+    std::cout << "\nIniciando partida!\n";
     std::cout << "A carta que comeca o jogo e:" << std::endl;
     monte_principal.imprimir_baralho();
     std::cout << "\n-----------------------------------\n" << std::endl;
 
     unsigned int indice_carta;
-    cor cor_atual = monte_inicial.get_carta(monte_inicial.get_numero_de_cartas()-1)->get_cor();
+    cor cor_atual = monte_principal.get_carta(monte_principal.get_numero_de_cartas()-1)->get_cor();
 
     bool curinga;
-    if(monte_inicial.get_carta(monte_inicial.get_numero_de_cartas()-1)->get_valor()!=14) {
+    if(monte_principal.get_carta(monte_principal.get_numero_de_cartas()-1)->get_valor()!=14) {
         curinga = false;
     }
     else {
@@ -59,9 +58,7 @@ void Sistema::nova_partida(int qntd_jogadores){
         std::cout << "Numero de cartas: " << c.get_jogador_atual()->get_mao()->get_numero_de_cartas() << std::endl;
         std::cout << "Cor da vez: " << cor_atual << std::endl;
         std::cout << "\nMao do jogador: \n\n";
-
         c.get_jogador_atual()->imprimir_mao();
-
         std::cout << "\n-----------------------------------\n"<< std::endl;
         std::cout << "Carta no topo: ";
         monte_principal.mostrar_topo()->imprime_carta();
@@ -78,10 +75,24 @@ void Sistema::nova_partida(int qntd_jogadores){
                 std::cin >> escolha;
                 
                 while(escolha == 2) {
+                    //Reiniciando o monte de compras caso ele se esgote
+                    if(monte_compras.get_numero_de_cartas()==0) {
+                        std::vector<Carta*> vetor_temporario_1 = monte_principal.get_cartas();
+                        vetor_temporario_1.pop_back();
+                        monte_compras.alterar_cartas(vetor_temporario_1);
+                        monte_compras.embaralhar_cartas();
+
+                        Carta* carta_topo = monte_principal.get_carta(monte_principal.get_numero_de_cartas()-1);
+                        std::vector<Carta*> vetor_temporario_2;
+                        vetor_temporario_2.push_back(carta_topo);
+                        monte_principal.alterar_cartas(vetor_temporario_2);
+                    }
+                    
                     std::vector<Carta*> vetor_temporario = c.get_jogador_atual()->get_mao()->get_cartas();
                     vetor_temporario.push_back(monte_compras.comer_carta());
                     c.get_jogador_atual()->get_mao()->alterar_cartas(vetor_temporario);
                     std::cout << std::endl;
+
                     std::cout << "Sua mão depois da compra é: " << std::endl;
                     c.get_jogador_atual()->imprimir_mao();
                     std::cout << "\n-----------------------------------\n"<< std::endl;
@@ -90,6 +101,7 @@ void Sistema::nova_partida(int qntd_jogadores){
                     std::cout << "\n-----------------------------------\n"<< std::endl << std::endl;
                     std::cout << "(1) Jogar carta" << std::endl;
                     std::cout << "(2) Comprar carta" << std::endl << std::endl;
+
                     std::cin >> escolha;
                     std::cout << std::endl;
                 }
@@ -97,6 +109,7 @@ void Sistema::nova_partida(int qntd_jogadores){
                 std::cout << "Digite o índice da carta que você deseja jogar: ";
                 std::cin >> indice_carta;
                 std::cout << std::endl;
+
                 if(curinga==false) {
                     monte_principal.adicionar_carta_topo(c.get_jogador_atual()->jogar_carta(indice_carta, monte_principal.mostrar_topo()));
                 }

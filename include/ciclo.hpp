@@ -16,6 +16,11 @@ class Ciclo {
         Ciclo();
 
         /*
+         * @brief Destroi um ciclo
+        */
+        ~Ciclo();
+
+        /*
          * @brief Adiciona jogadores para o ciclo
         */
         void adicionar_jogadores(Jogador*);
