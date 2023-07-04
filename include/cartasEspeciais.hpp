@@ -5,6 +5,8 @@
 
 class CartasEspeciais : public CartasNumericas{
     public:
+        //Necessário mudar
+        CartasEspeciais();
         bool block();
         virtual bool come();
         bool inverte();
