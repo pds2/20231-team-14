@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "include/interface/spriteBaralho.hpp"
+#include "include/interface/interface.hpp"
+#include "include/interface/sistema.hpp"
 #include <iostream>
 
 // #define USE_AUDIO_ENGINE 1
@@ -92,7 +93,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // run
     //director->runWithScene(scene);
 
-    auto baralho = SpriteBaralho::createScene();
+    auto baralho = Interface::createScene();
     //auto cartas = SpritesCartas::createScene();
 
     // run

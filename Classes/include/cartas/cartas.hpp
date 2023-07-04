@@ -56,6 +56,8 @@ class Carta {
          */
         std::string get_sprite();
 
+        //virtual bool verificar_jogada(MonteCartasJogadas);
+
         
 };
 

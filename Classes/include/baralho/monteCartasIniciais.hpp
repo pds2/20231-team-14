@@ -19,11 +19,6 @@ class MonteCartasIniciais : public Baralho {
          * @brief Seleciona e retorna a carta que irá começar o jogo, com exceção da carta "Mais Quatro"
          */
         Carta* selecionar_carta_inicial();
-
-        /*
-         * @brief Limpa as cartas restantes após a distribuição de cartas inicial
-         */
-        void limpar_monte_inicial();
 };
 
 #endif

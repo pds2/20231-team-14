@@ -56,37 +56,39 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
+     Classes/src/cartas/cartas.cpp
+     Classes/src/cartas/cartasEspeciais.cpp
+     Classes/src/cartas/cartasEspeciaisPretas.cpp
+     Classes/src/cartas/cartasNumericas.cpp
      Classes/src/baralho/baralho.cpp
      Classes/src/baralho/maoJogador.cpp
      Classes/src/baralho/monteCartasComer.cpp
      Classes/src/baralho/monteCartasIniciais.cpp
      Classes/src/baralho/monteCartasJogadas.cpp
-     Classes/src/cartas/cartas.cpp
-     Classes/src/cartas/cartasEspeciais.cpp
-     Classes/src/cartas/cartasEspeciaisPretas.cpp
-     Classes/src/cartas/cartasNumericas.cpp
      Classes/src/jogador/bot.cpp
      Classes/src/jogador/jogador.cpp
      Classes/src/jogador/usuario.cpp
-     Classes/HelloWorldScene.cpp
-     Classes/src/interface/spriteBaralho.cpp
+     Classes/src/interface/ciclo.cpp
+     Classes/src/interface/sistema.cpp
+     Classes/src/interface/interface.cpp
      Classes/AppDelegate.cpp
      )
 list(APPEND GAME_HEADER
+     Classes/include/cartas/cartas.hpp
+     Classes/include/cartas/cartasEspeciais.hpp
+     Classes/include/cartas/cartasEspeciaisPretas.hpp
+     Classes/include/cartas/cartasNumericas.hpp
      Classes/include/baralho/baralho.hpp
      Classes/include/baralho/maoJogador.hpp
      Classes/include/baralho/monteCartasComer.hpp
      Classes/include/baralho/monteCartasIniciais.hpp
      Classes/include/baralho/monteCartasJogadas.hpp
-     Classes/include/cartas/cartas.hpp
-     Classes/include/cartas/cartasEspeciais.hpp
-     Classes/include/cartas/cartasEspeciaisPretas.hpp
-     Classes/include/cartas/cartasNumericas.hpp
      Classes/include/jogador/bot.hpp
      Classes/include/jogador/jogador.hpp
      Classes/include/jogador/usuario.hpp
-     Classes/HelloWorldScene.h
-     Classes/include/interface/spriteBaralho.hpp
+     Classes/include/interface/ciclo.hpp
+     Classes/include/interface/sistema.hpp
+     Classes/include/interface/interface.hpp
      Classes/AppDelegate.h
      )
 
