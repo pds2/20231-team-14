@@ -5,6 +5,7 @@
 #include <vector>
 
 class Bot {
+    /*
     private:
         std::vector<cocos2d::Sprite*> cartas_bot;
         int botID;
@@ -15,7 +16,7 @@ class Bot {
         void adicionarBotTela(double posicao_bot_x, double posicao_bot_y, bool variando_x, int quantidade_cartas, int rotacao,int botID,cocos2d::Size visibleSize, cocos2d::Vec2 origin);
         cocos2d::Sprite* get_interface_carta_bot(int indice);
         void jogarCartaInterface();
-
+*/
 };
 
 

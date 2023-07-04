@@ -21,7 +21,6 @@ void Jogador::imprimir_mao() {
 
 Carta* Jogador::jogar_carta(unsigned int indice, Carta* carta_topo) {
     if(!verifica_carta_jogada(indice, carta_topo)) throw JogadaInvalida_e();
-    
     return _mao->jogar_carta_selecionada(indice);
 }
 
@@ -39,15 +38,19 @@ bool Jogador::verifica_carta_jogada(unsigned int indice, Carta* carta_topo){
     return true;
 }
 
-Carta* Jogador::jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga) {
+bool Jogador::verifica_cor_jogada(unsigned int indice, cor curinga){
     if(indice < 0 || indice >= _mao->get_numero_de_cartas()) {
-        throw JogadaInvalida_e();
+        return false;
     }
 
     if(_mao->get_carta(indice)->get_cor() != curinga) {
-        throw JogadaInvalida_e();
-    }
+        return false;
+    }  
+    return true;
+}
 
+Carta* Jogador::jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga) {
+    if(!verifica_cor_jogada(indice,curinga)) throw JogadaInvalida_e();
     return _mao->jogar_carta_selecionada(indice);
 }
 
@@ -63,13 +66,54 @@ MaoJogador* Jogador::get_mao(){
     return _mao;
 }
 
-void Jogador::criar_interface_mao(int posicao_carta,double posicao_x, double posicao_y, bool variando_x, int rotacao, cocos2d::Size tamanho, bool bot){
-    _mao->criar_interface_carta_mao(posicao_carta,posicao_x, posicao_y, variando_x, rotacao, tamanho, bot);
+void Jogador::inicializa_posicao_cartas(double posicao_x, double posicao_y, bool variando_x, int rotacao, cocos2d::Size tamanho, bool bot){
+    this->posicao_x = posicao_x;
+    this->posicao_y = posicao_y;
+    this->variacao_x = variando_x;
+    this->rotacao = rotacao;
+    this->tamanho = tamanho;
+    this->bot = bot;   
+}
+
+
+void Jogador::criar_interface_mao(int posicao_carta){
+    double posicao_x_temporaria = posicao_x;
+    double posicao_y_temporaria = posicao_y;
+    if(variacao_x) posicao_x_temporaria -= (_mao->get_numero_de_cartas() * tamanho.height)/3;
+    else posicao_y_temporaria -=(_mao->get_numero_de_cartas() * tamanho.height)/3;
+    _mao->criar_interface_carta_mao(posicao_carta,posicao_x_temporaria, posicao_y_temporaria, variacao_x, rotacao, tamanho, bot);
+}
+
+void Jogador::organizar_mao_jogador(){
+    double posicao_x_temporaria = posicao_x;
+    double posicao_y_temporaria = posicao_y;
+    if(variacao_x) posicao_x_temporaria -= (_mao->get_numero_de_cartas() * tamanho.height)/3;
+    else posicao_y_temporaria -=(_mao->get_numero_de_cartas() * tamanho.height)/3;
+
+    for(int posicao_carta = 0; posicao_carta < _mao->get_numero_de_cartas(); posicao_carta++){
+        if(variacao_x){
+            _mao->get_interface_carta_mao(posicao_carta)->setPosition(posicao_x_temporaria + posicao_carta * _mao->get_interface_carta_mao(posicao_carta)->getContentSize().width, posicao_y_temporaria);
+        }else {
+            _mao->get_interface_carta_mao(posicao_carta)->setPosition(posicao_x_temporaria, posicao_y_temporaria + posicao_carta * _mao->get_interface_carta_mao(posicao_carta)->getContentSize().width);
+        }
+    }  
 }
 
 cocos2d::Sprite* Jogador::get_sprite_mao(int indice){
     cocos2d::Sprite* carta = _mao->get_interface_carta_mao(indice);
     return carta;
+}
+
+void Jogador::adicionar_evento(cocos2d::EventListenerTouchOneByOne* touchCarta){
+    touchCartas.push_back(touchCarta);
+}
+
+void Jogador::remover_evento(int posicao_carta){
+    touchCartas.erase(touchCartas.begin() + posicao_carta);
+}
+
+cocos2d::EventListenerTouchOneByOne* Jogador::get_evento(int indice){
+    return touchCartas.at(indice);
 }
 
 

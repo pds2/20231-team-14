@@ -38,6 +38,9 @@ class MonteCartasJogadas: public Baralho {
         */
         cocos2d::Sprite* get_inteface_monte_jogadas();
 
+        /**
+         * @brief Define o sprite da carta jogada mostrada na tela
+        */
         void set_inteface_monte_jogadas(cocos2d::Sprite* sprite);
         
 };

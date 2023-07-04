@@ -42,8 +42,6 @@ class MaoJogador : public Baralho {
          * @brief Remove o sprite da carta jogada da mão
         */
         void remove_interface_carta_mao(int indice);
-
-        Carta getCarta(int indice);
 };
 
 #endif

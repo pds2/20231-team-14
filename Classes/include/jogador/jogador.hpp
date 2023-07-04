@@ -13,6 +13,11 @@ class Jogador {
         unsigned int _numero_de_cartas_na_mao;
         MaoJogador* _mao;
         unsigned int _id; //apenas para testes da classe "ciclo"
+        std::vector<cocos2d::EventListenerTouchOneByOne*> touchCartas;
+        int rotacao;
+        double posicao_x,  posicao_y;
+        bool variacao_x, bot;
+        cocos2d::Size tamanho;
     public:
         /*
          * @brief Constrói um jogador com 7 cartas em mãos
@@ -23,6 +28,11 @@ class Jogador {
          * @brief Construi um jogador vazio
         */
         Jogador();
+
+        /**
+         * @brief Inicializa a posição do jogador na Interface
+        */
+        void inicializa_posicao_cartas(double posicao_x, double posicao_y, bool variando_x, int rotacao, cocos2d::Size tamanho, bool bot);
 
         /*
          * @brief Recebe cartas
@@ -41,9 +51,14 @@ class Jogador {
         Carta* jogar_carta(unsigned int indice, Carta* carta_topo);
 
         /**
-         * @brief Verifica se a jogada é possível
+         * @brief Verifica se a jogada é possível com a carta
         */
         bool verifica_carta_jogada(unsigned int indice, Carta* carta_topo);
+
+        /**
+         * @brief Verifica se a jogada é possível com a cor
+        */
+        bool verifica_cor_jogada(unsigned int indice, cor curinga);
 
         /*
          * @brief Joga a carta especificada pelo índice, caso a jogada seja válida (analisando somente a cor do coringa)
@@ -69,12 +84,33 @@ class Jogador {
         /**
          * @brief Cria a mão do jogador
         */
-        void criar_interface_mao(int posicao_carta,double posicao_x, double posicao_y, bool variando_x, int rotacao, cocos2d::Size tamanho, bool bot);
+        void criar_interface_mao(int posicao_carta);
 
         /**
          * @brief Retorna o sprite da mão 
         */
-       cocos2d::Sprite* get_sprite_mao(int indice);
+        cocos2d::Sprite* get_sprite_mao(int indice);
+
+        /**
+         * @brief Organiza a mão do jogador na tela
+        */
+        void organizar_mao_jogador();
+
+        /**
+         * @brief Adiciona o evento de clicar em uma carta
+        */
+        void adicionar_evento(cocos2d::EventListenerTouchOneByOne* touchCarta);
+
+        /**
+         * @brief Remove o evento de clicar em uma carta
+        */
+        void remover_evento(int posicao_carta);
+
+        /**
+         * @brief Retorna o evento de clicar em uma carta
+        */
+        cocos2d::EventListenerTouchOneByOne* get_evento(int indice);
+       
 };
 
 #endif
