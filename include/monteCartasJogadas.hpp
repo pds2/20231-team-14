@@ -2,10 +2,6 @@
 #define UNO_MONTE_CARTAS_JOGADAS_HPP
 
 #include "baralho.hpp"
-//#include "cartas.hpp"
-//#include "cartasNumericas.hpp"
-//#include "cartasEspeciais.hpp"
-//#include "cartasEspeciaisPretas.hpp"
 
 class MonteCartasJogadas : public Baralho {
     public:

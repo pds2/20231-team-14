@@ -3,6 +3,8 @@
 
 #include "baralho.hpp"
 
+class NumeroCartasInsuficientes_e {};
+
 class MonteCartasComer : public Baralho {
     public:
         /*

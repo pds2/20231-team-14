@@ -2,7 +2,6 @@
 #define UNO_BARALHO_HPP
 
 #include <vector>
-
 #include "cartas.hpp"
 #include "cartasNumericas.hpp"
 #include "cartasEspeciais.hpp"
@@ -23,7 +22,7 @@ class Baralho {
         Baralho();
 
         /*
-         * @brief Constrói um baralho em ordem aleatória com todas as cartas de um jogo completo padrão
+         * @brief Constrói um baralho com todas as cartas passadas como parâmetro
          */
         Baralho(unsigned int numero_de_cartas, std::vector<Carta*> cartas);
 
