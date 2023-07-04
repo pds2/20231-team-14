@@ -25,10 +25,6 @@ bool Interface::init(){
     return true;
 }
 
-void Interface::finalizarPartida(){
-    _partida_finalizada = true;
-}
-
 void Interface::criaPartida(){
     escolhendo_cor = false;
     qntd_jogadores = 4;
