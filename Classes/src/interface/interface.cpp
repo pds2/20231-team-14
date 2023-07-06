@@ -74,7 +74,6 @@ void Interface::cria_partida(){
 
     c = new Ciclo();
     MonteCartasIniciais *monte_inicial = preparar_monte_inicial();
-    // Cria os jogadores e suas cartas
     preparar_jogadores(monte_inicial);
     preparar_monte_cartas_jogadas(monte_inicial);
     preparar_monte_cartas_para_compra(monte_inicial);
@@ -130,7 +129,6 @@ void Interface::inicializa_posicao_jogador(int index){
 }
 
 void Interface::cria_baralho(){
-    /* Implementação do baralho de cartas*/
     monte_compras->criar_interface_monte_comer(visibleSize, origin);
     comprar_carta();
     this->addChild(monte_compras->get_interface_monte_comer());
@@ -138,7 +136,6 @@ void Interface::cria_baralho(){
 }
 
 void Interface::cria_monte(){
-    /* Implementação da última jogada*/
     monte_principal->criar_inteface_monte_jogadas(visibleSize, origin);
     this->addChild(monte_principal->get_inteface_monte_jogadas());
 }
@@ -158,6 +155,8 @@ void Interface::adicionar_carta(int posicao_carta, Jogador* jogador){
 
 void Interface::comprar_carta(){
     touchMonteComer = cocos2d::EventListenerTouchOneByOne::create();
+
+    //Evento que captura o clique do baralho para comprar uma carta
     touchMonteComer->onTouchBegan = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
         cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
         if (bounds.containsPoint(touch->getLocation())){
@@ -187,6 +186,8 @@ void Interface::jogar_carta_clique(int posicao_carta, Jogador* jogador){
     Carta *carta = jogador->get_mao()->get_carta(posicao_carta);
     cocos2d::EventListenerTouchOneByOne* touchCarta = cocos2d::EventListenerTouchOneByOne::create();
     int jogadorID = jogador->get_id();
+
+    //Evento que captura o clique em uma das cartas da mão do jogador
     touchCarta->onTouchBegan = [&, carta,jogadorID](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
         cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
         if (bounds.containsPoint(touch->getLocation())){
@@ -309,7 +310,8 @@ void Interface::criar_interface_cor(){
             y = origin.y + visibleSize.width/3;
         }
         quadrado_cor->setPosition(x, y);
-
+        
+        //Evento que captura o clique em uma das cores da mudança de cor
         cocos2d::EventListenerTouchOneByOne* touchCor = cocos2d::EventListenerTouchOneByOne::create();
             touchCor->onTouchBegan = [&,quadrados](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
                 cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
