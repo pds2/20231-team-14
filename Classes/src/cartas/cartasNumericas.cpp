@@ -1,6 +1,6 @@
 #include "../../include/cartas/cartasNumericas.hpp"
 
-CartasNumericas::CartasNumericas(){}
+CartasNumericas::CartasNumericas() : Carta() {};
 
 CartasNumericas::CartasNumericas(valor valor, cor cor){
     muda_valor(valor);

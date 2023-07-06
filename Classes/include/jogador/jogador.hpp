@@ -30,6 +30,11 @@ class Jogador {
         Jogador();
 
         /**
+         * @brief Destroi a mão do jogador
+        */
+        ~Jogador();
+
+        /**
          * @brief Inicializa a posição do jogador na Interface
         */
         void inicializa_posicao_cartas(double posicao_x, double posicao_y, bool variando_x, int rotacao, cocos2d::Size tamanho, bool bot);

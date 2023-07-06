@@ -1,9 +1,16 @@
 #include "../../include/interface/ciclo.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 Ciclo::Ciclo(){
     _indexJogador = 0;
+}
+
+Ciclo::~Ciclo() {
+    for(Jogador* j : _jogadores) {
+        delete j;
+    }
 }
 
 void Ciclo::adicionar_jogadores(Jogador* j){
@@ -31,7 +38,7 @@ void Ciclo::inverter(){
 }
 
 Jogador* Ciclo::get_proximo_jogador() {
-    if((_indexJogador+1) >( int)_jogadores.size()) {
+    if((_indexJogador+1) > (int)_jogadores.size()) {
         return _jogadores[0];
     }
     return _jogadores[_indexJogador+1];
@@ -45,8 +52,12 @@ Jogador* Ciclo::get_jogador(int i){
     for(Jogador* j : _jogadores){
         if(j->get_id() == i) return j;
     }
+    return nullptr;
 }
 
 Jogador* Ciclo::get_jogador_por_indice(int indice) {
+    if(indice < 0 || indice >= (int)_jogadores.size()) {
+        throw IndiceJogadorInvalido_e();
+    }
     return _jogadores[indice];
 }

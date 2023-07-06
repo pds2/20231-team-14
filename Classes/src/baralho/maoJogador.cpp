@@ -8,6 +8,10 @@ MaoJogador::MaoJogador(unsigned int qtd_cartas_inicial,
 MaoJogador::MaoJogador(): Baralho() {}
 
 Carta* MaoJogador::jogar_carta_selecionada(unsigned int indice) {
+    if(indice >= get_numero_de_cartas()) {
+        throw IndiceInvalido_e();
+    }
+    
     std::vector<Carta*> vetor_temporario = get_cartas();
     Carta* jogada_da_vez = vetor_temporario[indice];
     vetor_temporario.erase(vetor_temporario.begin()+indice);

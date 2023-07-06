@@ -1,5 +1,7 @@
 #include "../../include/cartas/cartasEspeciaisPretas.hpp"
 
+CartasEspeciaisPretas::CartasEspeciaisPretas() : CartasEspeciais() {};
+
 bool CartasEspeciaisPretas::come(){
     if (this->get_valor()==13) return true;
     else return false;

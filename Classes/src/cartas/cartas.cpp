@@ -84,12 +84,18 @@ void Carta::imprime_carta() {
         std::cout << std::endl;
 }
 
-void Carta::muda_valor(unsigned int x) {
-    _valor = valor(x);
+void Carta::muda_valor(unsigned int val) {
+    if(val >= 15) {
+        throw ValorInvalido_e();
+    }
+    _valor = valor(val);
 }
 
-void Carta::muda_cor(unsigned int x) {
-    _cor = cor(x);
+void Carta::muda_cor(unsigned int c) {
+    if(c > 4) {
+        throw CorInvalida_e();
+    }
+    _cor = cor(c);
 }
 
 std::string Carta::get_sprite(){

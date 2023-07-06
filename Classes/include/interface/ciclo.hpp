@@ -5,6 +5,7 @@
 
 #include <vector>
 
+class IndiceJogadorInvalido_e {};
 class Ciclo {
     private:
         std::vector<Jogador*> _jogadores;
@@ -14,6 +15,11 @@ class Ciclo {
          * @brief Constroi um ciclo
         */
         Ciclo();
+
+         /*
+         * @brief Destroi um ciclo
+        */
+        ~Ciclo();
 
         /*
          * @brief Adiciona jogadores para o ciclo
@@ -52,6 +58,7 @@ class Ciclo {
 
         /*
          * @brief Retorna o jogador posicionado em determinado índice do vetor
+         * @throws Lança uma exceção caso não exista um jogador com o índice especificado
         */
         Jogador* get_jogador_por_indice(int indice);
 };

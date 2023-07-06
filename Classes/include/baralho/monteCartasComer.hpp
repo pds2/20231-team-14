@@ -4,6 +4,8 @@
 #include "baralho.hpp"
 #include "cocos2d.h"
 
+class NumeroCartasInsuficientes_e {};
+
 class MonteCartasComer : public Baralho {
     private:
         cocos2d::Sprite* cartasComerSprite;

@@ -11,6 +11,10 @@ enum cor {
     VERMELHO, VERDE, AZUL, AMARELO, PRETA
 };
 
+class ValorInvalido_e{};
+
+class CorInvalida_e {};
+
 class Carta {
     private:
         valor _valor;
@@ -43,13 +47,15 @@ class Carta {
 
         /*
          * @brief Muda o valor de uma carta de UNO
+         * @throws Lança uma exceção caso o valor esteja fora das opções possíveis
          */
-        void muda_valor(unsigned int x);
+        void muda_valor(unsigned int val);
 
         /*
          * @brief Muda a cor de uma carta de UNO
+         * @throws Lança uma exceção caso a cor esteja fora das opções possíveis
          */
-        void muda_cor(unsigned int x);
+        void muda_cor(unsigned int c);
 
         /*
          * @brief Retorna o sprite da carta

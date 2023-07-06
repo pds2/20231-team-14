@@ -1,6 +1,5 @@
 #include "AppDelegate.h"
 #include "include/interface/interface.hpp"
-#include "include/interface/sistema.hpp"
 #include <iostream>
 
 // #define USE_AUDIO_ENGINE 1

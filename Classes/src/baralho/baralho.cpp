@@ -16,11 +16,9 @@ Baralho::Baralho(unsigned int numero_de_cartas, std::vector<Carta*> cartas) {
 }
 
 Baralho::~Baralho() {
-    /*
     for(Carta* c : _cartas) {
         delete c;
     }
-    */
 }
 
 unsigned int Baralho::get_numero_de_cartas() {
@@ -32,6 +30,9 @@ std::vector<Carta*> Baralho::get_cartas() {
 }
 
 Carta* Baralho::get_carta(unsigned int indice) {
+    if(indice >= _cartas.size()) {
+        throw IndiceInvalido_e();
+    }
     return _cartas[indice];
 }   
 
@@ -42,6 +43,9 @@ void Baralho::imprimir_baralho() {
 }
 
 void Baralho::alterar_numero_cartas(unsigned int novo_numero) {
+    if(novo_numero > 108) {
+        throw NumeroCartasInvalido_e();
+    }
     _numero_de_cartas = novo_numero;
 }
 

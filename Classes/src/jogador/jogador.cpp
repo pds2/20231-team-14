@@ -11,6 +11,10 @@ Jogador::Jogador(){
     //_mao = mao;
 }
 
+Jogador::~Jogador(){
+    delete _mao;
+}
+
 void Jogador::receber_cartas(MaoJogador* mao){
     _mao = mao;
 }
@@ -43,7 +47,7 @@ bool Jogador::verifica_cor_jogada(unsigned int indice, cor curinga){
         return false;
     }
 
-    if(_mao->get_carta(indice)->get_cor() != curinga) {
+    if((_mao->get_carta(indice)->get_cor() != curinga) && (_mao->get_carta(indice)->get_cor() != cor(4))) {
         return false;
     }  
     return true;
