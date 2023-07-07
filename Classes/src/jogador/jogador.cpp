@@ -8,7 +8,6 @@ Jogador::Jogador(unsigned int id){
 
 Jogador::Jogador(){
     _numero_de_cartas_na_mao = 7;
-    //_mao = mao;
 }
 
 Jogador::~Jogador(){

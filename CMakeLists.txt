@@ -68,6 +68,7 @@ list(APPEND GAME_SOURCE
      Classes/src/jogador/bot.cpp
      Classes/src/jogador/jogador.cpp
      Classes/src/interface/ciclo.cpp
+     Classes/src/interface/sistema.cpp
      Classes/src/interface/interface.cpp
      Classes/AppDelegate.cpp
      )
@@ -84,6 +85,7 @@ list(APPEND GAME_HEADER
      Classes/include/jogador/bot.hpp
      Classes/include/jogador/jogador.hpp
      Classes/include/interface/ciclo.hpp
+     Classes/include/interface/sistema.hpp
      Classes/include/interface/interface.hpp
      Classes/AppDelegate.h
      )
