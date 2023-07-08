@@ -9,7 +9,6 @@
 #include "../../include/jogador/jogador.hpp"
 #include "../../include/jogador/bot.hpp"
 #include "ciclo.hpp"
-#include <iostream>
 #include <vector>
 
 class PartidaInvalida_e {};

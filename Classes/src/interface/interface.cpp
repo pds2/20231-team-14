@@ -13,8 +13,6 @@ bool Interface::init(){
         return false;
     }
 
-    spritescartas = cocos2d::SpriteFrameCache::getInstance();
-    spritescartas->addSpriteFramesWithFile("cartasUno.plist");
     escolhendo_cor = false;
     sistema = new Sistema(4,7);
 
@@ -50,9 +48,11 @@ void Interface::cria_jogador(int jogador){
 void Interface::adicionar_carta(int posicao_carta, Jogador* jogador){
     sprites.criar_interface_carta_mao(posicao_carta, jogador->get_id(), jogador->get_mao()->get_carta(posicao_carta), jogador->get_mao()->get_numero_de_cartas());
     this->addChild(sprites.get_interface_carta_mao(posicao_carta, jogador->get_id()));
-    jogar_carta_clique(posicao_carta,jogador);
-    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(\
-    eventos.get_evento_jogar_carta(posicao_carta, jogador->get_id()),sprites.get_interface_carta_mao(posicao_carta, jogador->get_id()));
+    if(!sprites.is_bot(jogador->get_id())){
+        jogar_carta_clique(posicao_carta,jogador);
+        cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(\
+        eventos.get_evento_jogar_carta(posicao_carta, jogador->get_id()),sprites.get_interface_carta_mao(posicao_carta, jogador->get_id()));
+    }
 }
 
 void  Interface::comprar_carta_clique(){
@@ -122,9 +122,13 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
 }
 
 void Interface::jogar_sprite_carta(int posicao_carta_mao){
+    sprites.mostra_carta_bot(posicao_carta_mao, sistema->get_ciclo()->get_jogador_atual()->get_id(), sistema->get_monte_jogadas()->mostrar_topo());
     sprites.mover_carta_centro(posicao_carta_mao, sistema->get_ciclo()->get_jogador_atual()->get_id());
-    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id()));
-    eventos.remover_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id());
+
+    if(!sprites.is_bot(sistema->get_ciclo()->get_jogador_atual()->get_id())){
+        cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id()));
+        eventos.remover_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id());       
+    }
 }
 
 void Interface::criar_interface_cor(){

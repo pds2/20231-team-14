@@ -161,7 +161,8 @@ MonteCartasJogadas* Sistema::get_monte_jogadas(){
  }
 
  Sistema::~Sistema(){
-    delete c;
-    delete monte_principal;
-    delete monte_compras;
+    //Destruir essas variaveis do heap está dando erro, tem que consertar porque deve estar tendo memory leak
+    //delete c;
+    //delete monte_principal;
+    //delete monte_compras;
  }

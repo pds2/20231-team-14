@@ -3,6 +3,8 @@
 Sprites::Sprites(){
     visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     origin = cocos2d::Director::getInstance()->getVisibleOrigin();
+    spritescartas = cocos2d::SpriteFrameCache::getInstance();
+    spritescartas->addSpriteFramesWithFile("cartasUno.plist");
 }
 
 std::string Sprites::get_sprite(Carta* carta){
@@ -35,6 +37,10 @@ void Sprites::inicializa_posicao_cartas(int qntd_jogadores){
     }
 }
 
+bool Sprites::is_bot(int jogador){
+    return bot.at(jogador);
+}
+
 // carta -> get_carta da carta mao do jogador
 void Sprites::criar_interface_carta_mao(int posicao_carta, int jogador, Carta* carta, int numero_cartas){
     cocos2d::Sprite* carta_mao;
@@ -51,6 +57,11 @@ void Sprites::criar_interface_carta_mao(int posicao_carta, int jogador, Carta* c
     }
     carta_mao->runAction(cocos2d::RotateTo::create(0,rotacao.at(jogador)));
     cartas_mao.at(jogador).push_back(carta_mao);
+}
+
+void Sprites::mostra_carta_bot(int posicao_carta, int jogador, Carta* carta){
+    cartas_mao.at(jogador).at(posicao_carta)->setSpriteFrame(get_sprite(carta));
+    cartas_mao.at(jogador).at(posicao_carta)->setContentSize(tamanho);
 }
 
 cocos2d::Sprite* Sprites::get_interface_carta_mao(int indice, int jogador){

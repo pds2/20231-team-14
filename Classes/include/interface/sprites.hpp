@@ -20,6 +20,11 @@ class Sprites{
         std::string get_sprite(Carta* carta);
 
         /**
+         * @brief Retorna se o jogador é um bot
+        */
+        bool is_bot(int jogador);
+
+        /**
          * @brief Inicializa posição das cartas mdos jogadores
         */
         void inicializa_posicao_cartas(int qntd_jogadores);
@@ -33,6 +38,11 @@ class Sprites{
          * @brief Retorna o sprite da carta do jogador para imprimi-lo na tela
         */
         cocos2d::Sprite* get_interface_carta_mao(int indice, int jogador);      
+
+        /**
+         * @brief Mostra a carta jogada pelo bot
+        */
+        void mostra_carta_bot(int posicao_carta, int jogador, Carta* carta);
 
         /**
          * @brief Move a carta selecionada pelo jogador para o centro da mesa
@@ -80,6 +90,7 @@ class Sprites{
         void clear_interface_escolha_cor();
         
     private:
+        cocos2d::SpriteFrameCache* spritescartas;
         std::vector<std::vector<cocos2d::Sprite*>> cartas_mao;
         cocos2d::Sprite* cartasComerSprite;
         cocos2d::Sprite* carta_jogada;

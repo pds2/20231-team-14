@@ -5,6 +5,7 @@
 #include "../sistema/sistema.hpp"
 #include "eventos.hpp"
 #include "sprites.hpp"
+#include <iostream>
 
 class Interface : public cocos2d::Layer{
 public:
@@ -76,7 +77,6 @@ public:
     CREATE_FUNC(Interface);
 private:
     bool escolhendo_cor;
-    cocos2d::SpriteFrameCache* spritescartas;
     Sistema *sistema;
     Eventos eventos;
     Sprites sprites;
