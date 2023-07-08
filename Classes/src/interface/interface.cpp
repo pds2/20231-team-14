@@ -9,12 +9,9 @@ cocos2d::Scene* Interface::createScene(){
 }
 
 bool Interface::init(){
-    if ( !cocos2d::Layer::init() )
-    {
+    if ( !cocos2d::Layer::init() ){
         return false;
     }
-    visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
-    origin = cocos2d::Director::getInstance()->getVisibleOrigin();
 
     spritescartas = cocos2d::SpriteFrameCache::getInstance();
     spritescartas->addSpriteFramesWithFile("cartasUno.plist");
@@ -23,70 +20,25 @@ bool Interface::init(){
 
     cria_baralho();
     cria_monte();
+    eventos.cria_eventos_jogar_carta(sistema->get_quantidade_jogadores());
+    sprites.inicializa_posicao_cartas(sistema->get_quantidade_jogadores());
     for(int jogador = 0; jogador < sistema->get_quantidade_jogadores(); jogador++){
-        inicializa_posicao_jogador(jogador);
         cria_jogador(jogador);
     }
 
     return true;
 }
 
-void Interface::inicializa_posicao_jogador(int index){
-    int rotacao;
-    double posicao_x,  posicao_y;
-    bool variacao_x, bot;
-    cocos2d::Size tamanho;
-    switch(index){
-        case 0:
-            tamanho = cocos2d::Size(visibleSize.height/11, visibleSize.height/8);
-            posicao_x = origin.x + (visibleSize.width/8) + ((visibleSize.width - (visibleSize.width/3) )/2) + (visibleSize.height/50) ;
-            posicao_y = origin.y + (visibleSize.height/25) ;
-            variacao_x = true;
-            rotacao = 0;
-            bot = false;
-            break;
-        case 1:
-            tamanho = cocos2d::Size(visibleSize.height/11, visibleSize.height/8);
-            posicao_x = origin.x + visibleSize.width - tamanho.width - (visibleSize.height/20);
-            posicao_y = origin.y + (visibleSize.height/8) + ((visibleSize.height - (visibleSize.height/3) )/2) + (visibleSize.height/50)  ;
-            variacao_x = false;
-            rotacao = 270;
-            //Provisorio
-            bot = false;
-            break;
-        case 2:
-            tamanho = cocos2d::Size(visibleSize.height/11, visibleSize.height/8);
-            posicao_x = origin.x + (visibleSize.width/8) + ((visibleSize.width  - (visibleSize.width/3) )/2) + (visibleSize.height/50) ;
-            posicao_y = origin.y + visibleSize.height - tamanho.height - (visibleSize.height/25);
-            variacao_x = true;
-            rotacao = 0;
-            //Provisorio
-            bot = false;
-            break;
-        case 3:
-            tamanho = cocos2d::Size(visibleSize.height/11, visibleSize.height/8);
-            posicao_x = origin.x + tamanho.width + (visibleSize.height/20);
-            posicao_y = origin.y + (visibleSize.height/60) + (visibleSize.height/5) + ((visibleSize.height  - (visibleSize.height/3) )/2) + (visibleSize.height/50)  ;
-            variacao_x = false;
-            rotacao = 90;
-            //Provisorio
-            bot = false;
-            break;
-    }
-
-    sistema->get_ciclo()->get_jogador(index)->inicializa_posicao_cartas(posicao_x, posicao_y, variacao_x, rotacao, tamanho, bot);
-}
-
 void Interface::cria_baralho(){
-    sistema->get_monte_compras()->criar_interface_monte_comer(visibleSize, origin);
+    sprites.criar_interface_monte_comer();
     comprar_carta_clique();
-    this->addChild(sistema->get_monte_compras()->get_interface_monte_comer());
-    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchMonteComer,sistema->get_monte_compras()->get_interface_monte_comer());
+    this->addChild(sprites.get_interface_monte_comer());
+    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventos.get_evento_comprar_carta(),sprites.get_interface_monte_comer());
 }
 
 void Interface::cria_monte(){
-    sistema->get_monte_jogadas()->criar_inteface_monte_jogadas(visibleSize, origin);
-    this->addChild(sistema->get_monte_jogadas()->get_inteface_monte_jogadas());
+    sprites.criar_inteface_monte_jogadas(sistema->get_monte_jogadas()->mostrar_topo());
+    this->addChild(sprites.get_inteface_monte_jogadas());
 }
 
 void Interface::cria_jogador(int jogador){
@@ -96,21 +48,22 @@ void Interface::cria_jogador(int jogador){
 }
 
 void Interface::adicionar_carta(int posicao_carta, Jogador* jogador){
-    jogador->criar_interface_mao(posicao_carta);
-    this->addChild(jogador->get_sprite_mao(posicao_carta));
+    sprites.criar_interface_carta_mao(posicao_carta, jogador->get_id(), jogador->get_mao()->get_carta(posicao_carta), jogador->get_mao()->get_numero_de_cartas());
+    this->addChild(sprites.get_interface_carta_mao(posicao_carta, jogador->get_id()));
     jogar_carta_clique(posicao_carta,jogador);
-    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority((jogador->get_evento(posicao_carta)),jogador->get_sprite_mao(posicao_carta));
+    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(\
+    eventos.get_evento_jogar_carta(posicao_carta, jogador->get_id()),sprites.get_interface_carta_mao(posicao_carta, jogador->get_id()));
 }
 
 void  Interface::comprar_carta_clique(){
-    touchMonteComer = cocos2d::EventListenerTouchOneByOne::create();
+    eventos.adicionar_evento_comprar_carta(cocos2d::EventListenerTouchOneByOne::create());
     //Evento que captura o clique do baralho para comprar uma carta
-    touchMonteComer->onTouchBegan = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
+    eventos.get_evento_comprar_carta()->onTouchBegan = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
         cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
         if (bounds.containsPoint(touch->getLocation())){
             sistema->comprar_carta();
             adicionar_carta((sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() - 1),sistema->get_ciclo()->get_jogador_atual());
-            sistema->get_ciclo()->get_jogador_atual()->organizar_mao_jogador();
+            sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_atual()->get_id(),sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas());
         }
         return true;
     };
@@ -131,11 +84,11 @@ void Interface::jogar_carta_clique(int posicao_carta, Jogador* jogador){
     };
     touchCarta->onTouchEnded = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
         for(int i = 0; i < sistema->get_quantidade_jogadores(); i++){
-            sistema->get_ciclo()->get_jogador_por_indice(i)->organizar_mao_jogador();
+            sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_por_indice(i)->get_id(),sistema->get_ciclo()->get_jogador_por_indice(i)->get_mao()->get_numero_de_cartas());
         }
         return true;
     };
-    jogador->adicionar_evento(touchCarta);
+    eventos.adicionar_evento_jogar_carta(touchCarta,jogadorID);
 }
 
 void Interface::organizar_jogada(Carta* carta, int jogadorID){
@@ -169,31 +122,16 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
 }
 
 void Interface::jogar_sprite_carta(int posicao_carta_mao){
-    sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_interface_carta_mao(posicao_carta_mao)->runAction(cocos2d::MoveTo::create(0.1, cocos2d::Vec2(\
-    origin.x + (visibleSize.width/2) - (sistema->get_monte_jogadas()->get_inteface_monte_jogadas()->getContentSize().width/2) ,\
-    origin.y + (visibleSize.height/2) - (sistema->get_monte_jogadas()->get_inteface_monte_jogadas()->getContentSize().height/2))));
-    sistema->get_monte_jogadas()->get_inteface_monte_jogadas()->runAction(cocos2d::RemoveSelf::create(false));
-    sistema->get_monte_jogadas()->set_inteface_monte_jogadas(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_interface_carta_mao(posicao_carta_mao));
-    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(sistema->get_ciclo()->get_jogador_atual()->get_evento(posicao_carta_mao));
-    sistema->get_ciclo()->get_jogador_atual()->get_mao()->remove_interface_carta_mao(posicao_carta_mao);
-    sistema->get_ciclo()->get_jogador_atual()->remover_evento(posicao_carta_mao);
+    sprites.mover_carta_centro(posicao_carta_mao, sistema->get_ciclo()->get_jogador_atual()->get_id());
+    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id()));
+    eventos.remover_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id());
 }
 
 void Interface::criar_interface_cor(){
     std::vector<std::string> cores = {"Vermelho.png","Verde.png","Azul.png","Amarelo.png"};
 
     for(int quadrados = 0; quadrados < 4; quadrados++){
-        cocos2d::Sprite* quadrado_cor = cocos2d::Sprite::create(cores.at(quadrados));
-        quadrado_cor->setContentSize(cocos2d::Size(visibleSize.height/10, visibleSize.width/15));
-        quadrado_cor->setAnchorPoint(cocos2d::Vec2(0, 0));
-        float x = origin.x + visibleSize.height/2 + visibleSize.height/10  + quadrado_cor->getContentSize().height*(quadrados-2);
-        float y = origin.y + visibleSize.width/3 - quadrado_cor->getContentSize().width;
-        if(quadrados < 2){
-            x = origin.x + visibleSize.height/2 + visibleSize.height/10  + quadrado_cor->getContentSize().height*quadrados;
-            y = origin.y + visibleSize.width/3;
-        }
-        quadrado_cor->setPosition(x, y);
-        
+        sprites.cria_interface_escolha_cor(cores.at(quadrados), quadrados);
         //Evento que captura o clique em uma das cores da mudança de cor
         cocos2d::EventListenerTouchOneByOne* touchCor = cocos2d::EventListenerTouchOneByOne::create();
             touchCor->onTouchBegan = [&,quadrados](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
@@ -201,21 +139,18 @@ void Interface::criar_interface_cor(){
                 if (bounds.containsPoint(touch->getLocation())){
                     escolhendo_cor = false;
                     sistema->set_cor_atual(cor(quadrados));
-
                     for(int i = 0; i < 4; i++){
-                        cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(touchCores.at(i));
-                        quadrados_cor.at(i)->runAction(cocos2d::RemoveSelf::create(false));
+                        cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_escolha_cor(i));
+                        sprites.get_interface_escolha_cor(i)->runAction(cocos2d::RemoveSelf::create(false));
                     }
-                    quadrados_cor.clear();
-                    touchCores.clear();
+                    sprites.clear_interface_escolha_cor();
+                    eventos.clear_evento_escolha_cor();
                 }
                 return true;
             };
-        this->addChild(quadrado_cor);
-        cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchCor,quadrado_cor);
-        quadrados_cor.push_back(quadrado_cor);
-        touchCores.push_back(touchCor);
-        
+        this->addChild(sprites.get_interface_escolha_cor(quadrados));
+        cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchCor,sprites.get_interface_escolha_cor(quadrados));
+        eventos.adicionar_evento_escolha_cor(touchCor);
     }
 }   
 

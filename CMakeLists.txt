@@ -65,10 +65,12 @@ list(APPEND GAME_SOURCE
      Classes/src/baralho/monteCartasComer.cpp
      Classes/src/baralho/monteCartasIniciais.cpp
      Classes/src/baralho/monteCartasJogadas.cpp
-     Classes/src/jogador/bot.cpp
      Classes/src/jogador/jogador.cpp
-     Classes/src/interface/ciclo.cpp
-     Classes/src/interface/sistema.cpp
+     Classes/src/jogador/bot.cpp
+     Classes/src/sistema/ciclo.cpp
+     Classes/src/sistema/sistema.cpp
+     Classes/src/interface/sprites.cpp
+     Classes/src/interface/eventos.cpp
      Classes/src/interface/interface.cpp
      Classes/AppDelegate.cpp
      )
@@ -82,10 +84,12 @@ list(APPEND GAME_HEADER
      Classes/include/baralho/monteCartasComer.hpp
      Classes/include/baralho/monteCartasIniciais.hpp
      Classes/include/baralho/monteCartasJogadas.hpp
-     Classes/include/jogador/bot.hpp
      Classes/include/jogador/jogador.hpp
-     Classes/include/interface/ciclo.hpp
-     Classes/include/interface/sistema.hpp
+     Classes/include/jogador/bot.hpp
+     Classes/include/sistema/ciclo.hpp
+     Classes/include/sistema/sistema.hpp
+     Classes/include/interface/sprites.hpp
+     Classes/include/interface/eventos.hpp
      Classes/include/interface/interface.hpp
      Classes/AppDelegate.h
      )

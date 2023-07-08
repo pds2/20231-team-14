@@ -32,16 +32,3 @@ Carta* MonteCartasComer::comer_carta() {
     alterar_numero_cartas(vetor_temporario.size());
     return ultima;
 }
-
-void MonteCartasComer::criar_interface_monte_comer(cocos2d::Size visibleSize, cocos2d::Vec2 origin){
-    cartasComerSprite = cocos2d::Sprite::create("BaralhoUno.png");
-    cartasComerSprite->setContentSize(cocos2d::Size(visibleSize.height/7, visibleSize.width/7));
-    cartasComerSprite->setAnchorPoint(cocos2d::Vec2(0, 0));
-    float x = origin.x;
-    float y = origin.y + visibleSize.height - cartasComerSprite->getContentSize().height;
-    cartasComerSprite->setPosition(x, y);
-}
-
-cocos2d::Sprite* MonteCartasComer::get_interface_monte_comer(){
-    return cartasComerSprite;
-}

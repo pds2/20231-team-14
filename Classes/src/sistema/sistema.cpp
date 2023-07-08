@@ -1,4 +1,4 @@
-#include "../../include/interface/sistema.hpp"
+#include "../../include/sistema/sistema.hpp"
 
 Sistema::Sistema(int qntd_jogadores, int qntd_cartas_iniciais){
     this->qntd_jogadores = qntd_jogadores;

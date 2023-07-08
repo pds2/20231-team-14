@@ -2,7 +2,9 @@
 #define INTERFACE_HPP
 
 #include "cocos2d.h"
-#include "sistema.hpp"
+#include "../sistema/sistema.hpp"
+#include "eventos.hpp"
+#include "sprites.hpp"
 
 class Interface : public cocos2d::Layer{
 public:
@@ -74,13 +76,10 @@ public:
     CREATE_FUNC(Interface);
 private:
     bool escolhendo_cor;
-    cocos2d::Size visibleSize;
-    cocos2d::Vec2 origin;
     cocos2d::SpriteFrameCache* spritescartas;
-    cocos2d::EventListenerTouchOneByOne* touchMonteComer;
-    std::vector<cocos2d::Sprite*> quadrados_cor;
-    std::vector <cocos2d::EventListenerTouchOneByOne*> touchCores;
     Sistema *sistema;
+    Eventos eventos;
+    Sprites sprites;
 
 };
 

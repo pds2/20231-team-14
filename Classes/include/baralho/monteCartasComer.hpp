@@ -2,13 +2,10 @@
 #define UNO_MONTE_CARTAS_COMER_HPP
 
 #include "baralho.hpp"
-#include "cocos2d.h"
 
 class NumeroCartasInsuficientes_e {};
 
 class MonteCartasComer : public Baralho {
-    private:
-        cocos2d::Sprite* cartasComerSprite;
     public:
         /*
          * @brief Constrói o monte de cartas para comer inicial da partida
@@ -34,17 +31,7 @@ class MonteCartasComer : public Baralho {
         /*
          * @brief Remove a carta do topo do monte e a retorna 
         */
-        Carta* comer_carta();
-
-        /*
-         * @brief Criar o sprite do baralho
-        */
-        void criar_interface_monte_comer(cocos2d::Size visibleSize, cocos2d::Vec2 origin);
-
-        /*
-         * @brief Retorna o sprite do monte para imprimi-lo na tela 
-        */
-        cocos2d::Sprite* get_interface_monte_comer();      
+        Carta* comer_carta();   
 
 };
 
