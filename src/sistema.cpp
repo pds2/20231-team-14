@@ -1,4 +1,5 @@
 #include "../include/sistema.hpp"
+#
 
 Sistema::Sistema(){
     cor_atual = cor(0);
@@ -29,7 +30,7 @@ void Sistema::nova_partida(){
     //Sistema sistema = Sistema(4,7);
     
     _qntd_jogadores = 3;
-    _qntd_cartas_iniciais = 4;
+    _qntd_cartas_iniciais = 2;
 
     if(_qntd_jogadores < 0 || _qntd_jogadores > 9 
        || _qntd_cartas_iniciais <= 0|| _qntd_cartas_iniciais > 108) {
@@ -136,6 +137,18 @@ void Sistema::nova_partida(){
         if(pode_jogar_carta){
                 while(!jogada_valida){
                     if(!c->get_jogador_atual()->get_humano()){
+
+                        if(c->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 2){
+                            int chance = 100 % rand();
+                            if (chance < 50){
+                                c->get_jogador_atual()->set_pedir_uno(true);
+                                std::cout << "Jogador " << c->get_jogador_atual()->get_id() << " pediu UNO!";
+                            } 
+                            else {
+                                c->get_jogador_atual()->set_pedir_uno(false);
+                            }
+                        } 
+
                         indice_carta = 0;
                         std::cout << "\nCarta no topo: ";
                         monte_principal->mostrar_topo()->imprime_carta();
@@ -151,7 +164,29 @@ void Sistema::nova_partida(){
                     }
                     else{
                         std::cout << "\n\nJogue uma carta: ";
-                        std::cin >> indice_carta;
+                        if(c->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 2){
+                            std::string pedir_uno;
+                            std::cin >> pedir_uno;
+                            if(pedir_uno == "UNO" || pedir_uno == "uno" || pedir_uno == "Uno"){
+                                c->get_jogador_atual()->set_pedir_uno(true);
+                                std::cout << "Jogador " << c->get_jogador_atual()->get_id() << " pediu UNO!";
+                                std::cout << "\n\nJogue uma carta: ";
+                                std::cin >> indice_carta;
+                            }
+                            else{
+                                try{
+                                    indice_carta = std::stoi(pedir_uno);
+                                } catch(std::invalid_argument){
+                                    indice_carta = 9999;
+                                }
+                                std::cout << "std::stoi : " << indice_carta << std::endl;
+                                c->get_jogador_atual()->set_pedir_uno(false);
+                            }
+                        }
+                        else{
+                            std::cin >> indice_carta;
+                        }
+                        
                         if (indice_carta >= 0  && indice_carta < c->get_jogador_atual()->get_mao()->get_numero_de_cartas()){
                             jogada_valida = true;
                         } 
@@ -163,6 +198,11 @@ void Sistema::nova_partida(){
                         else {
                             std::cout << "\nIndice invalido\n";
                         }
+                        
+                        if(rodada == 1 && monte_principal->mostrar_topo()->get_cor() == cor(4)) {
+                            cor_atual = c->get_jogador_atual()->get_mao()->get_carta(indice_carta)->get_cor();
+                        }
+
                         if(c->get_jogador_atual()->verifica_carta_jogada(indice_carta, monte_principal->mostrar_topo()) || c->get_jogador_atual()->get_mao()->get_carta(indice_carta)->get_cor() == cor_atual){
                             cor_atual = c->get_jogador_atual()->get_mao()->get_carta(indice_carta)->get_cor();
                             monte_principal->adicionar_carta_topo(c->get_jogador_atual()->jogar_carta(indice_carta, monte_principal->mostrar_topo()));
@@ -180,7 +220,24 @@ void Sistema::nova_partida(){
                     }      
             }
         }
-
+        if(c->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 1 && !c->get_jogador_atual()->get_pediu_uno()){
+            std::cout << "\nJogador " << c->get_jogador_atual()->get_id() << " esqueceu de pedir uno.\n";
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            comprar_carta();
+            comprar_carta();
+            unsigned int ultima_carta = c->get_jogador_atual()->get_mao()->get_numero_de_cartas() - 1;
+            std::cout << "\nComprando 2 carta.\n";
+            if(c->get_jogador_atual()->get_humano()){
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                std::cout << "\nCarta 1  comprada : " ;
+                c->get_jogador_atual()->get_mao()->get_carta(ultima_carta-1)->imprime_carta();
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                std::cout << "\nCarta 2  comprada : " ;
+                c->get_jogador_atual()->get_mao()->get_carta(ultima_carta)->imprime_carta();
+            }
+        }
+        /// Verifica primeiro se algum jogador venceu a partida. Caso nao, faca troca de cores
+        /// caso necessario ou efeitos especiais e passe a vez pro proximo jogador
         if (c->get_jogador_atual()->verificar_vitoria()) _partida_finalizada = true;
         else {
             if(checa_mudanca_cor()){

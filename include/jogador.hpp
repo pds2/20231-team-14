@@ -13,6 +13,7 @@ class Jogador {
         MaoJogador* _mao;
         unsigned int _id; //apenas para testes da classe "ciclo"
         bool _humano;
+        bool _pediu_uno;
     public:
         /*
          * @brief Constrói um jogador com 7 cartas em mãos
@@ -93,6 +94,16 @@ class Jogador {
          * @brief Seta a mao do jogador
         */
         void set_mao();
+
+        /**
+         * @brief Seta 'uno' do jogador.
+        */
+        void set_pedir_uno(bool uno);
+
+        /**
+         * @brief Retorna pedir uno.
+        */
+        bool get_pediu_uno();
        
 };
 

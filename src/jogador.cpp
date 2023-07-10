@@ -36,11 +36,13 @@ bool Jogador::verifica_carta_jogada(unsigned int indice, Carta* carta_topo){
     if(indice < 0 || indice >= _mao->get_numero_de_cartas()) {
         return false;
     }
+    if(carta_topo->get_cor() == cor(4)) return true;
     if(_mao->get_carta(indice)->get_cor() < cor(4)) {
         if(_mao->get_carta(indice)->get_cor() != carta_topo->get_cor() && _mao->get_carta(indice)->get_valor() != carta_topo->get_valor()) {
                 return false;
             }
     }
+    
     return true;
 }
 
@@ -86,5 +88,13 @@ void Jogador::set_id(unsigned int id){
 
 void Jogador::set_mao(){
     _mao = new MaoJogador();
+}
+
+void Jogador::set_pedir_uno(bool uno){
+    _pediu_uno = uno;
+}
+
+bool Jogador::get_pediu_uno(){
+    return _pediu_uno;
 }
 

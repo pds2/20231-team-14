@@ -14,6 +14,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 class PartidaInvalida_e {};
 class CartaNaoPertence_e {};
