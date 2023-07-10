@@ -1,5 +1,7 @@
 main
 *.o
-linux-build
 .vscode
-bin
+bin/
+build/
+execution.exe
+trabalho.rar

@@ -10,26 +10,26 @@
 //Função auxiliar para gerar vetor com todas as cartas de um jogo completo
 std::vector<Carta*> criar_monte_inicial() {
     std::vector<Carta*> vetor_temporario;
-    /*
-     * for(int i=0; i<108; i++) {
+    
+      for(int i=0; i<108; i++) {
         CartasNumericas* nova_carta = new CartasNumericas(); 
         vetor_temporario.push_back(nova_carta);
     }
-    */
+    
 
     /*
     * Criando as cartas. Num jogo de uno, há 76 cartas numéricas (0 a 9, cada cor), 24 especiais
     * (block,+2 e inverter, cada cor) e 8 coringas (+4 e troca cor).
     */
-    for (int i = 0; i < 76 ; i++){
-        vetor_temporario.push_back(new CartasNumericas());
-    }
-    for(int i = 0; i < 24; i++){
-        vetor_temporario.push_back(new CartasEspeciais());
-    }
-    for(int i = 0; i < 8; i++){
-        vetor_temporario.push_back(new CartasEspeciaisPretas());
-    }
+    // for (int i = 0; i < 76 ; i++){
+    //     vetor_temporario.push_back(new CartasNumericas());
+    // }
+    // for(int i = 0; i < 24; i++){
+    //     vetor_temporario.push_back(new CartasEspeciais());
+    // }
+    // for(int i = 0; i < 8; i++){
+    //     vetor_temporario.push_back(new CartasEspeciaisPretas());
+    // }
 
     int count=0;
     //Adicionando um zero de cada cor

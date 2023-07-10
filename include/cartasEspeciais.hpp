@@ -5,11 +5,10 @@
 
 class CartasEspeciais : public CartasNumericas{
     public:
-        //Necessário mudar
         CartasEspeciais();
-        bool block();
-        virtual bool come();
-        bool inverte();
+        bool pula_vez() override;
+        bool come() override;
+        bool inverte() override;
+        //bool troca_cor() override;
 };
-
 #endif

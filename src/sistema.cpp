@@ -29,7 +29,7 @@ void Sistema::nova_partida(){
     //Sistema sistema = Sistema(4,7);
     
     _qntd_jogadores = 3;
-    _qntd_cartas_iniciais = 7;
+    _qntd_cartas_iniciais = 4;
 
     if(_qntd_jogadores < 0 || _qntd_jogadores > 9 
        || _qntd_cartas_iniciais <= 0|| _qntd_cartas_iniciais > 108) {
@@ -166,6 +166,9 @@ void Sistema::nova_partida(){
                         if(c->get_jogador_atual()->verifica_carta_jogada(indice_carta, monte_principal->mostrar_topo()) || c->get_jogador_atual()->get_mao()->get_carta(indice_carta)->get_cor() == cor_atual){
                             cor_atual = c->get_jogador_atual()->get_mao()->get_carta(indice_carta)->get_cor();
                             monte_principal->adicionar_carta_topo(c->get_jogador_atual()->jogar_carta(indice_carta, monte_principal->mostrar_topo()));
+                            std::cout << "\nCarta jogada : ";
+                            monte_principal->mostrar_topo()->imprime_carta();
+                            std::this_thread::sleep_for(std::chrono::seconds(2));
                         }
                         else {
                             if(indice_carta == 99) {
@@ -332,10 +335,64 @@ bool Sistema::checa_mudanca_cor(){
     return false; 
 }
 
-int Sistema::aplicar_efeito_especial(){    
-    int quantidade_cartas_comprar = 0;
+int Sistema::aplicar_efeito_especial(){   
     valor checar_especial = monte_principal->mostrar_topo()->get_valor();
-    switch(checar_especial) {
+    int quantidade_cartas_comprar = 0;
+    /**
+     * std::cout <<"\nentrando no aplicar efeito\n"; 
+    
+    
+    //auto* carta = monte_principal->mostrar_topo();
+    std::cout << "\ncarta no topo: ";
+    monte_principal->mostrar_topo()->imprime_carta();
+    bool inverteu = monte_principal->mostrar_topo()->inverte();
+    bool comeu = monte_principal->mostrar_topo()->come();
+    bool pulou_vez = monte_principal->mostrar_topo()->pula_vez();
+    std::cout <<"\nentrando nos ifs\n";
+    std::cout << "\nCome?" << (comeu ? " sim" : " nao") << std::endl;
+    std::cout << "\nInverte?" << (inverteu ? " sim" : " nao") << std::endl;
+    std::cout << "\nPula vez?" << (pulou_vez ? " sim" : " nao") << std::endl;
+    
+    if(inverteu){
+        std::cout <<"\ntentando inverter\n";
+        c->inverter();
+        std::cout << "\nInvertendo ordem dos jogadores.\n";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+    } 
+    else if(pulou_vez){
+        std::cout <<"\ntentando pular vez\n";
+        std::cout << "\nJogador " << c->get_proximo_jogador()->get_id() << " teve sua vez pulada...\n";
+        c->proximo_jogador();
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+    } 
+    else if(comeu){
+        std::cout <<"\ntentando fazer comer\n";
+        if(monte_principal->mostrar_topo()->get_valor() == 12){
+            std::cout <<"\ncomer +2\n";
+            quantidade_cartas_comprar = 2;
+            comprar_carta_proximo_jogador(quantidade_cartas_comprar);
+            std::cout << "\nJogador " << c->get_proximo_jogador()->get_id() << " comeu 2 cartas...\n";
+            std::cout << "E teve sua vez pulada.\n";
+            c->proximo_jogador();
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+        }
+        else{
+            std::cout <<"\ncomer +4\n";
+            quantidade_cartas_comprar = 4;
+            comprar_carta_proximo_jogador(quantidade_cartas_comprar);
+            std::cout << "\nJogador " << c->get_proximo_jogador()->get_id() << " comeu 4 cartas...\n";
+            std::cout << "E teve sua vez pulada.\n";
+            c->proximo_jogador();
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+        }
+    }
+    else {
+        std::cout << "\nnenhum efeito especial\n";
+    }
+    std::cout <<"\nsaindo do aplicar efeito\n";
+    */
+    
+     switch(checar_especial) {
         case valor(10):
             c->inverter();
             std::cout << "\nInvertendo ordem dos jogadores.\n";
@@ -364,9 +421,9 @@ int Sistema::aplicar_efeito_especial(){
             break;
         default:
             break;
-    }
-    return quantidade_cartas_comprar;
-}
+        }
+            return quantidade_cartas_comprar;
+        }
 
 void Sistema::comprar_carta_proximo_jogador(int quantidade_cartas){ 
     for(int i=0; i<quantidade_cartas; i++) {

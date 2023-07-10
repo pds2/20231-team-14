@@ -3,15 +3,10 @@
 CartasEspeciaisPretas::CartasEspeciaisPretas(){};
 
 bool CartasEspeciaisPretas::come(){
-    if (this->get_valor()==13) return true;
+    if (this->get_valor()==valor(13)) return true;
     else return false;
 }
 
-bool CartasEspeciaisPretas::trocar_cor(){
-    if (this->get_valor()==14) return true;
-    else return false;
-}
-
-bool CartasEspeciaisPretas::verificar_jogada(Carta* carta){
+bool CartasEspeciaisPretas::troca_cor(){
     return true;
 }

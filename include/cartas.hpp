@@ -19,6 +19,10 @@ class Carta {
     private:
         valor _valor;
         cor _cor;
+        // bool _come;
+        // bool _pula_vez;
+        // bool _troca_cor;
+        // bool _inverte;
     public:
         /*
          * @brief Constrói uma carta de UNO 
@@ -62,9 +66,10 @@ class Carta {
          */
         std::string get_sprite();
 
-        //virtual bool verificar_jogada(MonteCartasJogadas);
-
-        
+        virtual bool come();
+        virtual bool pula_vez();
+        virtual bool inverte();
+        virtual bool troca_cor();   
 };
 
 #endif

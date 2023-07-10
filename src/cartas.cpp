@@ -91,3 +91,23 @@ void Carta::muda_valor(unsigned int x) {
 void Carta::muda_cor(unsigned int x) {
     _cor = cor(x);
 }
+
+bool Carta::come(){
+    std::cout << "\nNAO COME\n";
+    return false;
+}
+
+bool Carta::pula_vez(){
+    std::cout << "\nNAO pula vez\n";
+    return false;
+}
+
+bool Carta::inverte(){
+    std::cout << "\nNAO inverte\n";
+    return false;
+}
+
+bool Carta::troca_cor(){
+    std::cout << "\nNAO troca cor\n";
+    return false;
+}

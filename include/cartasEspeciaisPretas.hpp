@@ -5,11 +5,9 @@
 
 class CartasEspeciaisPretas : public CartasEspeciais{
     public:
-        //Necessário mudar
         CartasEspeciaisPretas();        
         bool come() override;
-        bool trocar_cor();
-        bool verificar_jogada(Carta* carta) override;
+        bool troca_cor() override;
 };
 
 #endif
