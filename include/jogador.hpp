@@ -103,8 +103,7 @@ class Jogador {
         /**
          * @brief Retorna pedir uno.
         */
-        bool get_pediu_uno();
-       
+        bool get_pediu_uno();     
 };
 
 #endif

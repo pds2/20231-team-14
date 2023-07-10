@@ -1,5 +1,4 @@
 #include "../include/sistema.hpp"
-#
 
 Sistema::Sistema(){
     cor_atual = cor(0);
@@ -28,12 +27,10 @@ Sistema::Sistema(int qntd_jogadores, int qntd_cartas_iniciais){
 
 void Sistema::nova_partida(){
     //Sistema sistema = Sistema(4,7);
-    
-    _qntd_jogadores = 3;
-    _qntd_cartas_iniciais = 2;
-
+    std::cout << "\nQuantidade de jogadores : " << _qntd_jogadores<< std::endl;
+    std::cout << "\nQuantidade de cartas iniciais : " << _qntd_cartas_iniciais<< std::endl;
     if(_qntd_jogadores < 0 || _qntd_jogadores > 9 
-       || _qntd_cartas_iniciais <= 0|| _qntd_cartas_iniciais > 108) {
+       || _qntd_cartas_iniciais <= 0|| _qntd_cartas_iniciais > 10) {
         throw PartidaInvalida_e {};
     }
 
@@ -448,8 +445,8 @@ int Sistema::aplicar_efeito_especial(){
     }
     std::cout <<"\nsaindo do aplicar efeito\n";
     */
-    
-     switch(checar_especial) {
+    quantidade_cartas_comprar = 0;
+    switch(checar_especial) {  
         case valor(10):
             c->inverter();
             std::cout << "\nInvertendo ordem dos jogadores.\n";
@@ -461,7 +458,7 @@ int Sistema::aplicar_efeito_especial(){
             std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         case valor(12):
-            quantidade_cartas_comprar = 2;
+            quantidade_cartas_comprar += 2;
             comprar_carta_proximo_jogador(quantidade_cartas_comprar);
             std::cout << "\nJogador " << c->get_proximo_jogador()->get_id() << " comeu 2 cartas...\n";
             std::cout << "E teve sua vez pulada.\n";
@@ -469,7 +466,7 @@ int Sistema::aplicar_efeito_especial(){
             std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         case valor(13): 
-            quantidade_cartas_comprar = 4;
+            quantidade_cartas_comprar += 4;
             comprar_carta_proximo_jogador(quantidade_cartas_comprar);
             std::cout << "\nJogador " << c->get_proximo_jogador()->get_id() << " comeu 4 cartas...\n";
             std::cout << "E teve sua vez pulada.\n";

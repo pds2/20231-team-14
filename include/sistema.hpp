@@ -134,6 +134,8 @@ class Sistema {
         Ciclo *c;
         MonteCartasJogadas *monte_principal;
         MonteCartasComer *monte_compras;
+        bool regra1; /*!< Regra de poder jogar mais quatro em cima de mais quatro */
+        bool regra2; /*!< Regra de poder jogar mais dois em cima de mais dois */
 };
 
 #endif

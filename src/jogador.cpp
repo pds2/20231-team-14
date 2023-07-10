@@ -17,6 +17,7 @@ Jogador::~Jogador(){
 }
 
 void Jogador::receber_cartas(MaoJogador* mao){
+    delete _mao;
     _mao = mao;
 }
 
