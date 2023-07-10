@@ -24,7 +24,26 @@ bool Interface::init(){
         cria_jogador(jogador);
     }
 
+    posicao_carta_bot = 0;
+
+    cocos2d::Scheduler* schedule = this->getScheduler();
+    schedule->setTimeScale(30.0);
+    this->setScheduler(schedule);
+    
+    this->scheduleUpdate(100);
+    std::cout << "" << std::endl;
+
     return true;
+}
+
+void Interface::update(float){
+    if(sistema->get_ciclo()->get_jogador_atual()->is_bot()){
+        if(posicao_carta_bot < sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas()){
+            organizar_jogada(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_carta(posicao_carta_bot), sistema->get_ciclo()->get_jogador_atual()->get_id());
+        }else{
+            organiza_compra_carta();
+        }
+    }
 }
 
 void Interface::cria_baralho(){
@@ -55,18 +74,24 @@ void Interface::adicionar_carta(int posicao_carta, Jogador* jogador){
     }
 }
 
-void  Interface::comprar_carta_clique(){
+void Interface::comprar_carta_clique(){
     eventos.adicionar_evento_comprar_carta(cocos2d::EventListenerTouchOneByOne::create());
     //Evento que captura o clique do baralho para comprar uma carta
     eventos.get_evento_comprar_carta()->onTouchBegan = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
         cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
         if (bounds.containsPoint(touch->getLocation())){
-            sistema->comprar_carta();
-            adicionar_carta((sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() - 1),sistema->get_ciclo()->get_jogador_atual());
-            sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_atual()->get_id(),sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas());
+            if(!sprites.is_bot(sistema->get_ciclo()->get_jogador_atual()->get_id())){
+                organiza_compra_carta();
+            }
         }
         return true;
     };
+}
+
+void Interface::organiza_compra_carta(){
+    sistema->comprar_carta();
+    adicionar_carta((sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() - 1),sistema->get_ciclo()->get_jogador_atual());
+    sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_atual()->get_id(),sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas());    
 }
 
 void Interface::jogar_carta_clique(int posicao_carta, Jogador* jogador){
@@ -82,22 +107,18 @@ void Interface::jogar_carta_clique(int posicao_carta, Jogador* jogador){
         }
         return true;
     };
-    touchCarta->onTouchEnded = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
-        for(int i = 0; i < sistema->get_quantidade_jogadores(); i++){
-            sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_por_indice(i)->get_id(),sistema->get_ciclo()->get_jogador_por_indice(i)->get_mao()->get_numero_de_cartas());
-        }
-        return true;
-    };
     eventos.adicionar_evento_jogar_carta(touchCarta,jogadorID);
 }
 
 void Interface::organizar_jogada(Carta* carta, int jogadorID){
     if(!escolhendo_cor && (sistema->get_ciclo()->get_jogador_atual()->get_id() == jogadorID)){
         int indice = sistema->definir_indice_carta_jogada(carta);
-        bool jogada_possivel = sistema->jogar_carta(indice);
-        if(jogada_possivel){
-            jogar_sprite_carta(indice);
 
+        try{
+            sistema->jogar_carta(indice);
+
+            jogar_sprite_carta(indice);
+            
             if (sistema->get_ciclo()->get_jogador_atual()->verificar_vitoria()){
                 std::cout << "Partida finalizada" << std::endl;
                 std::cout << "Vencedor jogador " << sistema->get_ciclo()->get_jogador_atual()->get_id() << std::endl;
@@ -109,14 +130,31 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
             for(int quantidade = 0; quantidade < quantidade_cartas_comprar; quantidade++){
                 if(sistema->get_ciclo()->get_index() == sistema->get_quantidade_jogadores()-1) {
                     adicionar_carta((sistema->get_ciclo()->get_jogador_por_indice(0)->get_mao()->get_numero_de_cartas() - quantidade_cartas_comprar + quantidade),sistema->get_ciclo()->get_jogador_por_indice(0));
+                    sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_por_indice(0)->get_id(),(sistema->get_ciclo()->get_jogador_por_indice(0)->get_mao()->get_numero_de_cartas() - quantidade_cartas_comprar + quantidade + 1));    
                 }else{
                     adicionar_carta((sistema->get_ciclo()->get_proximo_jogador()->get_mao()->get_numero_de_cartas() - quantidade_cartas_comprar + quantidade),sistema->get_ciclo()->get_proximo_jogador());
+                    sprites.organizar_mao_jogador(sistema->get_ciclo()->get_proximo_jogador()->get_id(),(sistema->get_ciclo()->get_proximo_jogador()->get_mao()->get_numero_de_cartas() - quantidade_cartas_comprar + quantidade + 1));    
                 }
             } 
 
             escolhendo_cor = sistema->checa_mudanca_cor();
-            if(escolhendo_cor)criar_interface_cor();
+            if(escolhendo_cor && !sistema->get_ciclo()->get_jogador_atual()->is_bot())criar_interface_cor();
+            else if (escolhendo_cor){
+                cor cor = sistema->get_ciclo()->get_jogador_atual()->get_cor_carta_mao();
+                sistema->set_cor_atual(cor);
+                sprites.muda_cor_curinga(sistema->get_monte_jogadas()->mostrar_topo(),cor);
+                escolhendo_cor = false;
+            }
+
             sistema->get_ciclo()->proximo_jogador();
+
+            if(sistema->get_ciclo()->get_jogador_atual()->is_bot()){
+                posicao_carta_bot  = 0;
+            }
+        }catch(JogadaInvalida_e &e){
+            if(sistema->get_ciclo()->get_jogador_atual()->is_bot()){
+                posicao_carta_bot ++;
+            }
         }
     }
 }
@@ -124,6 +162,7 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
 void Interface::jogar_sprite_carta(int posicao_carta_mao){
     sprites.mostra_carta_bot(posicao_carta_mao, sistema->get_ciclo()->get_jogador_atual()->get_id(), sistema->get_monte_jogadas()->mostrar_topo());
     sprites.mover_carta_centro(posicao_carta_mao, sistema->get_ciclo()->get_jogador_atual()->get_id());
+    sprites.organizar_mao_jogador(sistema->get_ciclo()->get_jogador_atual()->get_id(),sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas());    
 
     if(!sprites.is_bot(sistema->get_ciclo()->get_jogador_atual()->get_id())){
         cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_jogar_carta(posicao_carta_mao,sistema->get_ciclo()->get_jogador_atual()->get_id()));
@@ -144,11 +183,12 @@ void Interface::criar_interface_cor(){
                     escolhendo_cor = false;
                     sistema->set_cor_atual(cor(quadrados));
                     for(int i = 0; i < 4; i++){
-                        cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_escolha_cor(i));
                         sprites.get_interface_escolha_cor(i)->runAction(cocos2d::RemoveSelf::create(false));
+                        cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_escolha_cor(i)); 
                     }
                     sprites.clear_interface_escolha_cor();
                     eventos.clear_evento_escolha_cor();
+                    sprites.muda_cor_curinga(sistema->get_monte_jogadas()->mostrar_topo(),cor(quadrados));
                 }
                 return true;
             };

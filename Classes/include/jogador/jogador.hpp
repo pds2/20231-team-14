@@ -28,6 +28,11 @@ class Jogador {
         */
         ~Jogador();
 
+        /**
+         * @brief Define se é um jogador ou um bot
+        */
+        virtual bool is_bot();
+
         /*
          * @brief Recebe cartas
         */
@@ -42,25 +47,15 @@ class Jogador {
          * @brief Joga a carta especificada pelo índice, caso a jogada seja válida
          * @throws Lança uma exceção caso a carta selecionada não possa ser jogada
          */
-        Carta* jogar_carta(unsigned int indice, Carta* carta_topo);
+        virtual Carta* jogar_carta(unsigned int indice, Carta* carta_topo);
 
         /**
-         * @brief Verifica se a jogada é possível com a carta
-        */
-        bool verifica_carta_jogada(unsigned int indice, Carta* carta_topo);
-
-        /**
-         * @brief Verifica se a jogada é possível com a cor
-        */
-        bool verifica_cor_jogada(unsigned int indice, cor curinga);
-
-        /*
          * @brief Joga a carta especificada pelo índice, caso a jogada seja válida (analisando somente a cor do coringa)
          * @throws Lança uma exceção caso a carta selecionada não possa ser jogada
          */
-        Carta* jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga);
+        virtual Carta* jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga);
 
-        /*
+        /**
         * @brief Vence o jogo quando chegar a 0 cartas.
         */
         bool verificar_vitoria();
@@ -74,6 +69,11 @@ class Jogador {
          * @brief Retorna a mão do jogador.
         */
         MaoJogador* get_mao();
+
+        /**
+         * @brief Retorna uma cor não preta de uma das cartas da mão do jogador
+        */
+       cor get_cor_carta_mao();
        
 };
 

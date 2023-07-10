@@ -72,7 +72,7 @@ class Sistema {
         /**
          *@brief Joga a carta se for possível
         */
-        bool jogar_carta(int posicao_carta_mao);
+        void jogar_carta(int posicao_carta_mao);
 
         /**
          *@brief Verifica se é necessário mudar de cor

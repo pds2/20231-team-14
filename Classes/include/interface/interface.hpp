@@ -20,6 +20,11 @@ public:
     virtual bool init(); 
 
     /**
+     * @brief Realiza ações durante o jogo
+    */
+    void update(float) override;
+
+    /**
      *@brief Destroi o sistema após o fime do programa
     */
     ~Interface();
@@ -55,6 +60,11 @@ public:
     void comprar_carta_clique();
 
     /**
+     * @brief Organiza os procedimentos para comprar uma carta
+    */
+    void organiza_compra_carta();
+
+    /**
      * @brief Cria o evento de clicar e jogar as cartas da mão
     */
     void jogar_carta_clique(int posicao_carta, Jogador* jogador);
@@ -77,6 +87,7 @@ public:
     CREATE_FUNC(Interface);
 private:
     bool escolhendo_cor;
+    int posicao_carta_bot;
     Sistema *sistema;
     Eventos eventos;
     Sprites sprites;

@@ -1,10 +1,13 @@
 #include "../../include/interface/sprites.hpp"
+#include <iostream>
 
 Sprites::Sprites(){
     visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
     origin = cocos2d::Director::getInstance()->getVisibleOrigin();
     spritescartas = cocos2d::SpriteFrameCache::getInstance();
     spritescartas->addSpriteFramesWithFile("cartasUno.plist");
+    spritescartaspretas= cocos2d::SpriteFrameCache::getInstance();
+    spritescartaspretas->addSpriteFramesWithFile("cartas_especias_coloridas.plist");
 }
 
 std::string Sprites::get_sprite(Carta* carta){
@@ -16,7 +19,7 @@ void Sprites::inicializa_posicao_cartas(int qntd_jogadores){
 
     for(int i = 0; i < qntd_jogadores;i++){
         rotacao.push_back(360 - (i * 90));
-        bot.push_back(false); //Provisorio
+        bot.push_back(true); 
 
         if((i%2) != 0){
             variacao_x.push_back(false);
@@ -128,9 +131,16 @@ void Sprites::cria_interface_escolha_cor(std::string cor, int quadrados){
     escolha_cores.push_back(quadrado_cor);
 }
 
+void Sprites::muda_cor_curinga(Carta* carta, cor cor_escolihida){
+    std::string carta_sprite = (std::to_string(carta->get_valor()) + "_" + std::to_string(carta->get_cor()) + "_" + std::to_string(cor_escolihida) + ".png");
+    carta_jogada->setSpriteFrame(carta_sprite);
+    carta_jogada->setContentSize(tamanho);
+}
+
 cocos2d::Sprite* Sprites::get_interface_escolha_cor(int indice){
     return escolha_cores.at(indice);
 }
+
 
 void Sprites::clear_interface_escolha_cor(){
     escolha_cores.clear();

@@ -80,6 +80,11 @@ class Sprites{
         void cria_interface_escolha_cor(std::string cor, int quadrados);
 
         /**
+         * @brief Muda a cor da carta jogada para a cor escolhida pelo jogador
+        */
+        void muda_cor_curinga(Carta* carta, cor cor_escolihida);
+
+        /**
          * @brief Retorna a interface de escolha de cor
         */
         cocos2d::Sprite* get_interface_escolha_cor(int indice);
@@ -91,6 +96,7 @@ class Sprites{
         
     private:
         cocos2d::SpriteFrameCache* spritescartas;
+        cocos2d::SpriteFrameCache* spritescartaspretas;
         std::vector<std::vector<cocos2d::Sprite*>> cartas_mao;
         cocos2d::Sprite* cartasComerSprite;
         cocos2d::Sprite* carta_jogada;

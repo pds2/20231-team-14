@@ -48,8 +48,13 @@ void Sistema::preparar_monte_cartas_jogadas(MonteCartasIniciais* monte_inicial){
 void Sistema::preparar_jogadores(MonteCartasIniciais* monte_inicial){
     for(int i = 0; i < qntd_jogadores; i++){
         std::vector<Carta*> mao_atual = monte_inicial->distribuir_mao_inicial(qntd_cartas_iniciais);
-        Jogador *jogador = new Jogador(i);
-        c->adicionar_jogadores(jogador);
+        if(i == 0){
+            Jogador *jogador = new Jogador(i);
+            c->adicionar_jogadores(jogador);
+        }else{
+            Bot *bot = new Bot(i);
+            c->adicionar_jogadores(bot);
+        }
         c->get_jogador(i)->receber_cartas(new MaoJogador(qntd_cartas_iniciais, mao_atual));
     }
 }
@@ -82,19 +87,14 @@ int Sistema::definir_indice_carta_jogada(Carta *carta_clicada){
     return posicao_carta_mao;
 }
 
-bool Sistema::jogar_carta(int posicao_carta_mao){
+void Sistema::jogar_carta(int posicao_carta_mao){
     if(curinga==false) {
-        if(c->get_jogador_atual()->verifica_carta_jogada(posicao_carta_mao, monte_principal->mostrar_topo())){
-            monte_principal->adicionar_carta_topo(c->get_jogador_atual()->jogar_carta(posicao_carta_mao, monte_principal->mostrar_topo()));
-            return true;
-        }
+        Carta* carta_jogada = c->get_jogador_atual()->jogar_carta(posicao_carta_mao, monte_principal->mostrar_topo());
+        monte_principal->adicionar_carta_topo(carta_jogada);
     }else{
-        if(c->get_jogador_atual()->verifica_cor_jogada(posicao_carta_mao, cor_atual)){
-            monte_principal->adicionar_carta_topo(c->get_jogador_atual()->jogar_carta_apenas_pela_cor(posicao_carta_mao, cor_atual));
-            return true;
-        }
-    }  
-    return false;      
+        Carta* carta_jogada = c->get_jogador_atual()->jogar_carta_apenas_pela_cor(posicao_carta_mao, cor_atual);
+        monte_principal->adicionar_carta_topo(carta_jogada);
+    }      
 }
 
 bool Sistema::checa_mudanca_cor(){
