@@ -1,7 +1,6 @@
-#include "../../include/sistema/ciclo.hpp"
+#include "../include/ciclo.hpp"
 
 #include <algorithm>
-#include <iostream>
 
 Ciclo::Ciclo(){
     _indexJogador = 0;
@@ -52,7 +51,6 @@ Jogador* Ciclo::get_jogador(int i){
     for(Jogador* j : _jogadores){
         if(j->get_id() == i) return j;
     }
-    return nullptr;
 }
 
 Jogador* Ciclo::get_jogador_por_indice(int indice) {

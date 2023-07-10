@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
-#include "../../include/baralho/baralho.hpp"
+#include "../include/baralho.hpp"
 
 Baralho::Baralho() {
     _numero_de_cartas = 0;
@@ -30,9 +30,6 @@ std::vector<Carta*> Baralho::get_cartas() {
 }
 
 Carta* Baralho::get_carta(unsigned int indice) {
-    if(indice >= _cartas.size()) {
-        throw IndiceInvalido_e();
-    }
     return _cartas[indice];
 }   
 
@@ -47,9 +44,6 @@ void Baralho::imprimir_baralho() {
 }
 
 void Baralho::alterar_numero_cartas(unsigned int novo_numero) {
-    if(novo_numero > 108) {
-        throw NumeroCartasInvalido_e();
-    }
     _numero_de_cartas = novo_numero;
 }
 

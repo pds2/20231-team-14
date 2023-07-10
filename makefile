@@ -1,7 +1,7 @@
 CC := g++
-SRCDIR := Classes/src
-BUILDDIR := bin/build
-TARGET := Classes/main
+SRCDIR := src
+BUILDDIR := build
+TARGET := main
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
