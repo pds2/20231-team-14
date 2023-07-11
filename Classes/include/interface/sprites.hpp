@@ -37,22 +37,22 @@ class Sprites{
         /**
          * @brief Retorna se o jogador é um bot
          * @param jogador Jogador a ser identificado
-         * @return 
+         * @return Retorna se a mão é de um bot
         */
         bool is_bot(int jogador);
 
         /**
-         * @brief Inicializa posição das cartas mdos jogadores
+         * @brief Inicializa posição das cartas na tela
          * @param qntd_jogadores Quantidade de jogadores na partida
         */
         void inicializa_posicao_cartas(int qntd_jogadores);
 
         /**
          * @brief Cria o sprite da carta do jogador para imprimi-lo na tela
-         * @param posicao_carta Posicao da carta na tela
+         * @param posicao_carta Posicao da carta na mão
          * @param jogador Indice do jogador
-         * @param carta As cartas do jogador
-         * @param numero_cartas Quantidade de cartas
+         * @param carta A carta que será adicionada
+         * @param numero_cartas Quantidade de cartas do jogador ou bot
         */
         void criar_interface_carta_mao(int posicao_carta, int jogador, Carta* carta, int numero_cartas);
 
@@ -60,28 +60,28 @@ class Sprites{
          * @brief Retorna o sprite da carta do jogador para imprimi-lo na tela
          * @param indice Indice da carta
          * @param jogador Indice do jogador
-         * @return 
+         * @return Retorna o sprite da carta da mão do jogador
         */
         cocos2d::Sprite* get_interface_carta_mao(int indice, int jogador);      
 
         /**
          * @brief Mostra a carta jogada pelo bot
-         * @param posicao_carta Posicao da carta na tela
+         * @param posicao_carta Posicao da carta na mão do jogador
          * @param jogador Indice do jogador
-         * @param carta A carta do jogador
+         * @param carta A carta do bot que será mostrada
         */
         void mostra_carta_bot(int posicao_carta, int jogador, Carta* carta);
 
         /**
          * @brief Move a carta selecionada pelo jogador para o centro da mesa
-         * @param posicao_carta_mao
-         * @param jogador
+         * @param posicao_carta_mao Indice da carta da mão do jogador
+         * @param jogador Indice do jogador
         */
         void mover_carta_centro(int posicao_carta_mao, int jogador);
 
         /**
          * @brief Retorna o sprite do monte para imprimi-lo na tela 
-         * @return 
+         * @return Sprite do baralho do jogador
         */
         cocos2d::Sprite* get_interface_monte_comer();      
 

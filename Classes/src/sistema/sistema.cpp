@@ -17,7 +17,7 @@ Sistema::Sistema(int qntd_jogadores, int qntd_cartas_iniciais){
 
     cor_atual = monte_principal->get_carta(monte_principal->get_numero_de_cartas()-1)->get_cor();
     setar_curinga();
-
+    monte_inicial->limpar_cartas();
     delete monte_inicial;
 }
 
@@ -162,7 +162,7 @@ MonteCartasComer* Sistema::get_monte_compras(){
 
  Sistema::~Sistema(){
     //Destruir essas variaveis do heap está dando erro, tem que consertar porque deve estar tendo memory leak
-    //delete c;
-    //delete monte_principal;
-    //delete monte_compras;
+    delete c;
+    delete monte_principal;
+    delete monte_compras;
  }

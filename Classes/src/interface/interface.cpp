@@ -25,13 +25,7 @@ bool Interface::init(){
         cria_jogador(jogador);
     }
 
-    cria_interface_uno();
-
     posicao_carta_bot = 0;
-
-    cocos2d::Scheduler* schedule = this->getScheduler();
-    schedule->setTimeScale(50.0);
-    this->setScheduler(schedule);
     
     this->scheduleUpdate();
 

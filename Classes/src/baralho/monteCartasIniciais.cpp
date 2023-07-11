@@ -9,17 +9,10 @@
 std::vector<Carta*> criar_monte_inicial() {
     std::vector<Carta*> vetor_temporario;
     
-    //Criando as cartas. Num jogo de Uno, há 76 cartas numéricas (0 a 9, cada cor), 24 especiais
-    for (int i = 0; i < 76 ; i++){
-        vetor_temporario.push_back(new CartasNumericas());
+      for(int i=0; i<108; i++) {
+        Carta* nova_carta = new Carta(); 
+        vetor_temporario.push_back(nova_carta);
     }
-    for(int i = 0; i < 24; i++){
-        vetor_temporario.push_back(new CartasEspeciais());
-    }
-    for(int i = 0; i < 8; i++){
-        vetor_temporario.push_back(new CartasEspeciaisPretas());
-    }
-
     int count=0;
     //Adicionando um zero de cada cor
     for(int i=0; i<4; i++) {
@@ -57,7 +50,7 @@ std::vector<Carta*> criar_monte_inicial() {
             vetor_temporario[count]->muda_cor(4);
             count++;
         }
-    }   
+    }    
 
     return vetor_temporario;
 }
