@@ -25,9 +25,7 @@ bool Interface::init(){
         cria_jogador(jogador);
     }
 
-    if(sistema->get_monte_jogadas()->mostrar_topo()->get_valor()==valor(4)){
-        criar_interface_cor();
-    }
+    cria_interface_uno();
 
     posicao_carta_bot = 0;
 
@@ -207,21 +205,15 @@ void Interface::criar_interface_cor(){
                 cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
                 if (bounds.containsPoint(touch->getLocation())){
                     escolhendo_cor = false;
-                    std::cout << "Passou 1" << std::endl;
                     sistema->set_cor_atual(cor(quadrados));
-                    std::cout << "Passou 2" << std::endl;
                     for(int i = 0; i < 4; i++){
-                        std::cout << "Passou " << (i + 3) <<  std::endl;
                         sprites.get_interface_escolha_cor(i)->runAction(cocos2d::RemoveSelf::create(false));
                         cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_escolha_cor(i)); 
                     }
-                    std::cout << "Passou 7" << std::endl;
                     sprites.clear_interface_escolha_cor();
-                    std::cout << "Passou 8" << std::endl;
                     eventos.clear_evento_escolha_cor();
-                    std::cout << "Passou 9" << std::endl;
+
                     sprites.muda_cor_curinga(sistema->get_monte_jogadas()->mostrar_topo(),cor(quadrados));
-                    std::cout << "Passou 10" << std::endl;
                 }
                 return true;
             };
