@@ -8,7 +8,7 @@ O projeto possui a depêndencia da instalação do framework cocos2d-x. Para ins
 $ https://github.com/pds2/20231-team-14/tree/main/cocos2d
 ```
 
-## Como Executar
+## Como executar o jogo com a interface
 
 Para compilar no Linux o código, deve-se utilizar o seguinte comando:
 
@@ -26,6 +26,20 @@ Para facilitar foi criado um arquivo shellscript para executar o código, assim 
 
 ```
 $ ./compileLinux.sh
+```
+
+## Como executar os testes de unidade das funções principais
+
+Primeiramente, é preciso acessar a pasta "Testes" utilizando o comando:
+
+```
+$ cd Testes/
+```
+
+Depois, o seguinte comando pode ser empregado para executar os testes:
+
+```
+$ make clean; make; make tests
 ```
 
 ## Funcionamento do programa
