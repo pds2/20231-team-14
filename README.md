@@ -36,7 +36,9 @@ Os jogadores jogam por turnos, no sentido horário, e o objetivo é combinar a c
 * Cartas de Ação: Estas cartas têm um ícone especial e podem ser usadas para interromper o turno do próximo jogador ou impor penalidades a outros jogadores. As cartas de ação incluem "Inverter" (muda a direção do jogo), "Bloquear" (o próximo jogador é impedido de jogar) e "Mais 2" (o próximo jogador compra duas cartas e perde seu turno).
 * Cartas de Curinga: As cartas de Curinga podem ser jogadas a qualquer momento e permitem que o jogador escolha uma nova cor para continuar o jogo, aparecendo no centro da tela as 4 cores possíveis para que jogador selecione uma das cores clicando nela. Existem duas variantes de cartas de Curinga: "Curinga Normal" (permite que o jogador escolha a próxima cor) e "Curinga +4" (permite que o jogador escolha a próxima cor e obriga o próximo jogador a comprar quatro cartas e perder seu turno).
 
-Se um jogador desejar comprar cartas durante o seu turno, ele pode comprar uma carta do monte de compra clicando no baralho no canto superior esquerdo. Se a carta comprada não puder ser jogada, o jogador pode comprar cartas até conseguir uma carta que puder ser jogada. O jogador passará o turno quando selecionar uma carta da mão para jogada-la
+Se um jogador desejar comprar cartas durante o seu turno, ele pode comprar uma carta do monte de compra clicando no baralho no canto superior esquerdo. Se a carta comprada não puder ser jogada, o jogador pode comprar cartas até conseguir uma carta que puder ser jogada. O jogador passará o turno quando selecionar uma carta da mão para jogada-la.
+
+Se um jogador tiver apenas duas cartas durante o seu turno, ele deve gritar uno antes de jogar uma das cartas clicando no símbolo no canto inferior esquerdo da tela. Caso contrário, o jogador receberá como punição a compra de duas novas castas do baralho.
 
 O jogo continua até que um jogador descarte todas as suas cartas, assim finalizando o jogo com o vencedor sendo o jogador que descartou todas as cartas.
 

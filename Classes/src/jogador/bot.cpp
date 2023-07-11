@@ -1,7 +1,9 @@
 #include "../../include/jogador/bot.hpp"
 #include <iostream>
 
-Bot::Bot(unsigned int id): Jogador(id){}
+Bot::Bot(unsigned int id): Jogador(id){
+    std::srand((unsigned) time(NULL));
+}
 
 bool Bot::is_bot(){
     return true;
@@ -20,11 +22,12 @@ Carta* Bot::jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga){
 }
 
 void Bot::grita_uno_aleatoriamente(){
-    if(get_mao()->get_numero_de_cartas() == 2){
-        int chance = 100 % rand();
-        if (chance < 50){
-            std::cout <<" Setou true" << std::endl;
+    if(get_mao()->get_numero_de_cartas() == 1){
+        int chance = (rand() % 100 );
+        if (chance < 80){
             set_pedir_uno(true);
+        }else{
+            set_pedir_uno(false);
         }
     }
 }

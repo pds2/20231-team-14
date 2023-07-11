@@ -1,6 +1,7 @@
 #ifndef UNO_BOT_HPP
 #define UNO_BOT_HPP
 
+#include<cstdlib>      
 #include "jogador.hpp"
 
 class Bot : public Jogador {

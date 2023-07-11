@@ -82,7 +82,7 @@ std::vector<Carta*> MonteCartasIniciais::distribuir_mao_inicial(unsigned int qtd
 Carta* MonteCartasIniciais::selecionar_carta_inicial() {
     std::vector<Carta*> vetor_temporario = get_cartas();
     unsigned int i = vetor_temporario.size()-1;
-    while(vetor_temporario[i]->get_valor()==13) {
+    while(vetor_temporario[i]->get_cor()== 4) {
         i--;
     }
     Carta* carta_temporaria = vetor_temporario[i];
