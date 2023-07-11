@@ -14,6 +14,10 @@ std::string Sprites::get_sprite(Carta* carta){
     return (std::to_string(carta->get_valor()) + "_" + std::to_string(carta->get_cor()) + ".png");
 }
 
+bool Sprites::is_bot(int jogador){
+    return bot.at(jogador);
+}
+
 void Sprites::inicializa_posicao_cartas(int qntd_jogadores){
     tamanho = cocos2d::Size(visibleSize.height/11, visibleSize.height/8);
 
@@ -38,10 +42,6 @@ void Sprites::inicializa_posicao_cartas(int qntd_jogadores){
         std::vector<cocos2d::Sprite*> cartas_jogador;
         cartas_mao.push_back(cartas_jogador);
     }
-}
-
-bool Sprites::is_bot(int jogador){
-    return bot.at(jogador);
 }
 
 // carta -> get_carta da carta mao do jogador

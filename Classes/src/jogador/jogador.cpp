@@ -53,15 +53,6 @@ Carta* Jogador::jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga) {
     return _mao->jogar_carta_selecionada(indice);
 }
 
-cor Jogador::get_cor_carta_mao(){
-    for(int carta = 0; carta < _mao->get_numero_de_cartas();carta++){
-        if(_mao->get_carta(carta)->get_cor() != cor(4)){
-            return _mao->get_carta(carta)->get_cor();
-        }
-    }
-    return cor(0);
-}
-
 bool Jogador::verificar_vitoria(){
     return (_mao->get_numero_de_cartas() == 0);
 }
@@ -72,6 +63,15 @@ int Jogador::get_id(){
 
 MaoJogador* Jogador::get_mao(){
     return _mao;
+}
+
+cor Jogador::get_cor_carta_mao(){
+    for(int carta = 0; carta < _mao->get_numero_de_cartas();carta++){
+        if(_mao->get_carta(carta)->get_cor() != cor(4)){
+            return _mao->get_carta(carta)->get_cor();
+        }
+    }
+    return cor(0);
 }
 
 void Jogador::set_pedir_uno(bool uno){

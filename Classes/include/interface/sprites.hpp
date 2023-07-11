@@ -7,6 +7,21 @@
 #include <string>
 
 class Sprites{
+    private:
+        cocos2d::SpriteFrameCache* spritescartas;
+        cocos2d::SpriteFrameCache* spritescartaspretas;
+        std::vector<std::vector<cocos2d::Sprite*>> cartas_mao;
+        cocos2d::Sprite* cartasComerSprite;
+        cocos2d::Sprite* carta_jogada;
+        std::vector<cocos2d::Sprite*> escolha_cores;
+        cocos2d::Sprite* simbolo_uno;
+        cocos2d::Size visibleSize;
+        cocos2d::Vec2 origin;
+        std::vector<int> rotacao;
+        std::vector<double> posicao_x,  posicao_y;
+        std::vector<bool> variacao_x, bot;
+        cocos2d::Size tamanho;
+
     public:
 
         /**
@@ -14,63 +29,84 @@ class Sprites{
         */
         Sprites();
 
-        /*
+        /**
          * @brief Retorna o sprite da carta
+         * @param carta A carta desejada
          */
         std::string get_sprite(Carta* carta);
 
         /**
          * @brief Retorna se o jogador é um bot
+         * @param jogador Jogador a ser identificado
+         * @return 
         */
         bool is_bot(int jogador);
 
         /**
          * @brief Inicializa posição das cartas mdos jogadores
+         * @param qntd_jogadores Quantidade de jogadores na partida
         */
         void inicializa_posicao_cartas(int qntd_jogadores);
 
         /**
          * @brief Cria o sprite da carta do jogador para imprimi-lo na tela
+         * @param posicao_carta Posicao da carta na tela
+         * @param jogador Indice do jogador
+         * @param carta As cartas do jogador
+         * @param numero_cartas Quantidade de cartas
         */
         void criar_interface_carta_mao(int posicao_carta, int jogador, Carta* carta, int numero_cartas);
 
         /**
          * @brief Retorna o sprite da carta do jogador para imprimi-lo na tela
+         * @param indice Indice da carta
+         * @param jogador Indice do jogador
+         * @return 
         */
         cocos2d::Sprite* get_interface_carta_mao(int indice, int jogador);      
 
         /**
          * @brief Mostra a carta jogada pelo bot
+         * @param posicao_carta Posicao da carta na tela
+         * @param jogador Indice do jogador
+         * @param carta A carta do jogador
         */
         void mostra_carta_bot(int posicao_carta, int jogador, Carta* carta);
 
         /**
          * @brief Move a carta selecionada pelo jogador para o centro da mesa
+         * @param posicao_carta_mao
+         * @param jogador
         */
         void mover_carta_centro(int posicao_carta_mao, int jogador);
 
-        /*
+        /**
          * @brief Retorna o sprite do monte para imprimi-lo na tela 
+         * @return 
         */
         cocos2d::Sprite* get_interface_monte_comer();      
 
-        /*
+        /**
          * @brief Criar o sprite do baralho
         */
         void criar_interface_monte_comer();
 
         /**
          * @brief Cria o sprite da carta no topo para mostra-lo na tela
+         * @param carta_inicio
         */
         void criar_inteface_monte_jogadas(Carta* carta_inicio);
 
         /**
          * @brief Retorna o sprite da carta no topo para mostra-lo na tela
+         * @return 
         */
         cocos2d::Sprite* get_inteface_monte_jogadas();
 
         /**
          * @brief Organiza a mão do jogador na tela
+         * @param jogador Indice do jogador
+         * @param numero_de_cartas Quantidade de cartas
         */
         void organizar_mao_jogador(int jogador, int numero_de_cartas);
 
@@ -104,20 +140,7 @@ class Sprites{
         */
         cocos2d::Sprite* get_interface_gritar_Uno();
         
-    private:
-        cocos2d::SpriteFrameCache* spritescartas;
-        cocos2d::SpriteFrameCache* spritescartaspretas;
-        std::vector<std::vector<cocos2d::Sprite*>> cartas_mao;
-        cocos2d::Sprite* cartasComerSprite;
-        cocos2d::Sprite* carta_jogada;
-        std::vector<cocos2d::Sprite*> escolha_cores;
-        cocos2d::Sprite* simbolo_uno;
-        cocos2d::Size visibleSize;
-        cocos2d::Vec2 origin;
-        std::vector<int> rotacao;
-        std::vector<double> posicao_x,  posicao_y;
-        std::vector<bool> variacao_x, bot;
-        cocos2d::Size tamanho;
+    
 };
 
 #endif

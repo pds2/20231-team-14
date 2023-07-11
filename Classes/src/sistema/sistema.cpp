@@ -148,12 +148,12 @@ Ciclo* Sistema::get_ciclo(){
     return c;
 }
 
-MonteCartasComer* Sistema::get_monte_compras(){
-    return monte_compras;
-}
-
 MonteCartasJogadas* Sistema::get_monte_jogadas(){
     return monte_principal;
+}
+
+MonteCartasComer* Sistema::get_monte_compras(){
+    return monte_compras;
 }
 
  void Sistema::set_cor_atual(cor cor_atual){
