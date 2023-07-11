@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-class Sprites{
+class Sprites{  
     private:
         cocos2d::SpriteFrameCache* spritescartas;
         cocos2d::SpriteFrameCache* spritescartaspretas;
@@ -21,7 +21,6 @@ class Sprites{
         std::vector<double> posicao_x,  posicao_y;
         std::vector<bool> variacao_x, bot;
         cocos2d::Size tamanho;
-
     public:
 
         /**
@@ -140,7 +139,6 @@ class Sprites{
         */
         cocos2d::Sprite* get_interface_gritar_Uno();
         
-    
 };
 
 #endif
