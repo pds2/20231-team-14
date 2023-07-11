@@ -86,7 +86,7 @@ void Interface::comprar_carta_clique(){
         if (bounds.containsPoint(touch->getLocation())){
             if(!sprites.is_bot(sistema->get_ciclo()->get_jogador_atual()->get_id())){
                 organiza_compra_carta();
-                if(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 3 && apareceu_pedir_uno = true){
+                if(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 3 && (apareceu_pedir_uno == true)){
                     std::cout << "Teste" << std::endl;
                     sistema->get_ciclo()->get_jogador_atual()->set_pedir_uno(false);
                     sprites.get_interface_gritar_Uno()->runAction(cocos2d::RemoveSelf::create(false));
