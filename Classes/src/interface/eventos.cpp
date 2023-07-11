@@ -38,3 +38,11 @@ cocos2d::EventListenerTouchOneByOne* Eventos::get_evento_escolha_cor(int indice)
 void Eventos::clear_evento_escolha_cor(){
     touch_cores.clear();
 }
+
+void Eventos::adicionar_evento_gritar_Uno(cocos2d::EventListenerTouchOneByOne* touchUno){
+    touch_Uno = touchUno;
+}
+
+cocos2d::EventListenerTouchOneByOne* Eventos::get_evento_gritar_Uno(){
+    return touch_Uno;
+}

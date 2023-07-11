@@ -145,3 +145,16 @@ cocos2d::Sprite* Sprites::get_interface_escolha_cor(int indice){
 void Sprites::clear_interface_escolha_cor(){
     escolha_cores.clear();
 }
+
+void Sprites::cria_interface_gritar_Uno(){
+    simbolo_uno = cocos2d::Sprite::create("Grita_Uno.png");
+    simbolo_uno->setContentSize(cocos2d::Size(visibleSize.height/7, visibleSize.width/7));
+    simbolo_uno->setAnchorPoint(cocos2d::Vec2(0, 0));
+    float x = origin.x + visibleSize.width - tamanho.width - (visibleSize.height/10);
+    float y = origin.y;
+    simbolo_uno->setPosition(x, y);
+}
+
+cocos2d::Sprite* Sprites::get_interface_gritar_Uno(){
+    return simbolo_uno;
+}

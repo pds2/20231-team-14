@@ -93,6 +93,16 @@ class Sprites{
          * @brief Limpa os escolhas de cor
         */
         void clear_interface_escolha_cor();
+
+        /**
+         * @brief Cria a interface de gritar Uno
+        */
+        void cria_interface_gritar_Uno();
+
+        /**
+         * @brief Retorna a interfade de gritar uno
+        */
+        cocos2d::Sprite* get_interface_gritar_Uno();
         
     private:
         cocos2d::SpriteFrameCache* spritescartas;
@@ -101,6 +111,7 @@ class Sprites{
         cocos2d::Sprite* cartasComerSprite;
         cocos2d::Sprite* carta_jogada;
         std::vector<cocos2d::Sprite*> escolha_cores;
+        cocos2d::Sprite* simbolo_uno;
         cocos2d::Size visibleSize;
         cocos2d::Vec2 origin;
         std::vector<int> rotacao;

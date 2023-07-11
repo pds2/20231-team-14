@@ -51,11 +51,22 @@ class Eventos{
         * @brief Limpa os eventos de escolha de cor
        */
       void clear_evento_escolha_cor();
+
+      /**
+       * @brief Adiciona o evento de gritar Uno
+      */
+      void adicionar_evento_gritar_Uno(cocos2d::EventListenerTouchOneByOne* touchUno);
+
+      /**
+       * @brief Retorna o evento de gritar Uno
+      */
+      cocos2d::EventListenerTouchOneByOne* get_evento_gritar_Uno();
     
     private:
         std::vector<std::vector<cocos2d::EventListenerTouchOneByOne*>> touchCartas;
         cocos2d::EventListenerTouchOneByOne* touch_baralho;
         std::vector<cocos2d::EventListenerTouchOneByOne*> touch_cores;
+        cocos2d::EventListenerTouchOneByOne* touch_Uno;
 
 };
 #endif

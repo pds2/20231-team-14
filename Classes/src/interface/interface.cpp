@@ -14,6 +14,7 @@ bool Interface::init(){
     }
 
     escolhendo_cor = false;
+    apareceu_pedir_uno = false;
     sistema = new Sistema(4,7);
 
     cria_baralho();
@@ -24,14 +25,17 @@ bool Interface::init(){
         cria_jogador(jogador);
     }
 
+    if(sistema->get_monte_jogadas()->mostrar_topo()->get_valor()==valor(4)){
+        criar_interface_cor();
+    }
+
     posicao_carta_bot = 0;
 
     cocos2d::Scheduler* schedule = this->getScheduler();
-    schedule->setTimeScale(30.0);
+    schedule->setTimeScale(50.0);
     this->setScheduler(schedule);
     
-    this->scheduleUpdate(100);
-    std::cout << "" << std::endl;
+    this->scheduleUpdate();
 
     return true;
 }
@@ -82,6 +86,13 @@ void Interface::comprar_carta_clique(){
         if (bounds.containsPoint(touch->getLocation())){
             if(!sprites.is_bot(sistema->get_ciclo()->get_jogador_atual()->get_id())){
                 organiza_compra_carta();
+                if(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 3 && apareceu_pedir_uno = true){
+                    std::cout << "Teste" << std::endl;
+                    sistema->get_ciclo()->get_jogador_atual()->set_pedir_uno(false);
+                    sprites.get_interface_gritar_Uno()->runAction(cocos2d::RemoveSelf::create(false));
+                    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_gritar_Uno()); 
+                    apareceu_pedir_uno = false;
+                }
             }
         }
         return true;
@@ -126,6 +137,17 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
                 cocos2d::Director::getInstance()->end();
             } 
 
+            if(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 1 && !sistema->get_ciclo()->get_jogador_atual()->is_pediu_uno()){  
+                if(!sistema->get_ciclo()->get_jogador_atual()->is_bot()){
+                    sprites.get_interface_gritar_Uno()->runAction(cocos2d::RemoveSelf::create(false));
+                    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_gritar_Uno()); 
+                    apareceu_pedir_uno = false;
+                }
+                for(int i = 0; i < 2; i++){
+                    organiza_compra_carta();
+                }
+            }
+
             int quantidade_cartas_comprar = sistema->aplicar_efeito_especial();
             for(int quantidade = 0; quantidade < quantidade_cartas_comprar; quantidade++){
                 if(sistema->get_ciclo()->get_index() == sistema->get_quantidade_jogadores()-1) {
@@ -147,6 +169,10 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
             }
 
             sistema->get_ciclo()->proximo_jogador();
+
+            if(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas() == 2 && !sistema->get_ciclo()->get_jogador_atual()->is_bot()){
+                cria_interface_uno();
+            }
 
             if(sistema->get_ciclo()->get_jogador_atual()->is_bot()){
                 posicao_carta_bot  = 0;
@@ -181,14 +207,21 @@ void Interface::criar_interface_cor(){
                 cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
                 if (bounds.containsPoint(touch->getLocation())){
                     escolhendo_cor = false;
+                    std::cout << "Passou 1" << std::endl;
                     sistema->set_cor_atual(cor(quadrados));
+                    std::cout << "Passou 2" << std::endl;
                     for(int i = 0; i < 4; i++){
+                        std::cout << "Passou " << (i + 3) <<  std::endl;
                         sprites.get_interface_escolha_cor(i)->runAction(cocos2d::RemoveSelf::create(false));
                         cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_escolha_cor(i)); 
                     }
+                    std::cout << "Passou 7" << std::endl;
                     sprites.clear_interface_escolha_cor();
+                    std::cout << "Passou 8" << std::endl;
                     eventos.clear_evento_escolha_cor();
+                    std::cout << "Passou 9" << std::endl;
                     sprites.muda_cor_curinga(sistema->get_monte_jogadas()->mostrar_topo(),cor(quadrados));
+                    std::cout << "Passou 10" << std::endl;
                 }
                 return true;
             };
@@ -197,6 +230,28 @@ void Interface::criar_interface_cor(){
         eventos.adicionar_evento_escolha_cor(touchCor);
     }
 }   
+
+void Interface::cria_interface_uno(){
+    sprites.cria_interface_gritar_Uno();
+    apareceu_pedir_uno = true;
+    eventos.adicionar_evento_gritar_Uno(cocos2d::EventListenerTouchOneByOne::create());
+    //Evento que captura o clique do baralho para comprar uma carta
+    eventos.get_evento_gritar_Uno()->onTouchBegan = [&](cocos2d::Touch* touch, cocos2d::Event* event) -> bool {
+        cocos2d::Rect bounds = event->getCurrentTarget()->getBoundingBox();
+        if (bounds.containsPoint(touch->getLocation())){
+            if(!sistema->get_ciclo()->get_jogador_atual()->is_bot()){
+                sistema->get_ciclo()->get_jogador_atual()->set_pedir_uno(true);
+                sprites.get_interface_gritar_Uno()->runAction(cocos2d::RemoveSelf::create(false));
+                cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListener(eventos.get_evento_gritar_Uno()); 
+                apareceu_pedir_uno = false;
+            }
+        }
+        return true;
+    };
+
+    this->addChild(sprites.get_interface_gritar_Uno());
+    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(eventos.get_evento_gritar_Uno(),sprites.get_interface_gritar_Uno());
+}
 
 Interface::~Interface(){
     delete sistema;

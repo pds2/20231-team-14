@@ -84,10 +84,16 @@ public:
     */
     void criar_interface_cor();
 
+    /**
+     * @brief Cria a interface para o jogador gritar uno
+    */
+    void cria_interface_uno();
+
     CREATE_FUNC(Interface);
 private:
     bool escolhendo_cor;
     int posicao_carta_bot;
+    bool apareceu_pedir_uno;
     Sistema *sistema;
     Eventos eventos;
     Sprites sprites;

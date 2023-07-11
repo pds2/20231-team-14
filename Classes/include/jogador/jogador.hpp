@@ -12,6 +12,7 @@ class Jogador {
         unsigned int _numero_de_cartas_na_mao;
         MaoJogador* _mao;
         unsigned int _id; //apenas para testes da classe "ciclo"
+        bool _pediu_uno;
     public:
         /*
          * @brief Constrói um jogador com 7 cartas em mãos
@@ -74,6 +75,16 @@ class Jogador {
          * @brief Retorna uma cor não preta de uma das cartas da mão do jogador
         */
        cor get_cor_carta_mao();
+
+        /**
+         * @brief Seta 'uno' do jogador.
+        */
+        void set_pedir_uno(bool uno);
+
+        /**
+         * @brief Retorna pedir uno.
+        */
+        bool is_pediu_uno();
        
 };
 

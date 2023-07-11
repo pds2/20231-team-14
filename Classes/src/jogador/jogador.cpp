@@ -74,4 +74,13 @@ MaoJogador* Jogador::get_mao(){
     return _mao;
 }
 
+void Jogador::set_pedir_uno(bool uno){
+    _pediu_uno = uno;
+}
+
+bool Jogador::is_pediu_uno(){
+    return _pediu_uno;
+}
+
+
 

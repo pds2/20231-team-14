@@ -9,6 +9,7 @@ class Bot : public Jogador {
         Carta* jogar_carta(unsigned int indice, Carta* carta_topo) override;
         Carta* jogar_carta_apenas_pela_cor(unsigned int indice, cor curinga) override;
         bool is_bot() override;
+        void grita_uno_aleatoriamente();
 };
 
 #endif
