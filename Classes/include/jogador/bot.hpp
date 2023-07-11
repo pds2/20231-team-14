@@ -1,7 +1,8 @@
 #ifndef UNO_BOT_HPP
 #define UNO_BOT_HPP
 
-#include<cstdlib>      
+#include <cstdlib>      
+#include <ctime>
 #include "jogador.hpp"
 
 class Bot : public Jogador {

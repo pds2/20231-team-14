@@ -92,13 +92,13 @@ class Sprites{
 
         /**
          * @brief Cria o sprite da carta no topo para mostra-lo na tela
-         * @param carta_inicio
+         * @param carta_inicio Carta exibida na tela como a carta jogada
         */
         void criar_inteface_monte_jogadas(Carta* carta_inicio);
 
         /**
          * @brief Retorna o sprite da carta no topo para mostra-lo na tela
-         * @return 
+         * @return Sprite da carta jogada no centro do jogo
         */
         cocos2d::Sprite* get_inteface_monte_jogadas();
 
@@ -111,16 +111,21 @@ class Sprites{
 
         /**
          * @brief Cria a sprite de escolha de cores
+         * @param cor Nome do arquivo png da cor do quadrado
+         * @param quadrados Posição do quadrado
         */
         void cria_interface_escolha_cor(std::string cor, int quadrados);
 
         /**
          * @brief Muda a cor da carta jogada para a cor escolhida pelo jogador
+         * @param carta Carta coringa que mudará de cor
+         * @param cor_escolhida Cor escolhida pelo jogador ou pelo bot
         */
         void muda_cor_curinga(Carta* carta, cor cor_escolihida);
 
         /**
          * @brief Retorna a interface de escolha de cor
+         * @return Sprite do quadrado de escolha de cor
         */
         cocos2d::Sprite* get_interface_escolha_cor(int indice);
 
@@ -136,6 +141,7 @@ class Sprites{
 
         /**
          * @brief Retorna a interfade de gritar uno
+         * @return Sprite de gritar uno
         */
         cocos2d::Sprite* get_interface_gritar_Uno();
         

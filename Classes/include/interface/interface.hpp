@@ -19,20 +19,18 @@ private:
 public:
     /**
      * @brief Cria a layer para permitir a inserção de imagens na tela
-     * @return cocos2d::Scene* 
+     * @return Toda a cena do programa que sera exibida na tela
     */
     static cocos2d::Scene* createScene();
 
     /**
      * @brief Função principal do jogo responsável pelo ciclo
-     * @return true
-     * @return false 
+     * @return Retorna true ou false
     */
     virtual bool init(); 
 
     /**
      * @brief Realiza ações durante o jogo
-     * @param 
     */
     void update(float) override;
 
@@ -48,7 +46,7 @@ public:
 
     /**
      * @brief Cria o sprite dos jogadores
-     * @param jogador
+     * @param jogador ID do jogador que será criado
     */
     void cria_jogador(int jogador);
 
@@ -59,20 +57,19 @@ public:
 
     /**
      * @brief Inicializa a posição que cada jogador vai ocupar na tela
-     * @param index
+     * @param index ID do jogador que será posicionado
     */
     void inicializa_posicao_jogador(int index);
 
     /**
      * @brief Adiciona o sprite de uma carta na mão de um jogador
-     * @param posicao_carta
-     * @param jogador
+     * @param posicao_carta Posição da carta na mão do jogador
+     * @param jogador Jogador que terá ua carta adicionada na sua mão
     */
     void adicionar_carta(int posicao_carta, Jogador* jogador);
 
     /**
      * @brief Cria o evento de comprar uma carta quando clicar no baralho
-     * @return true
     */
     void comprar_carta_clique();
 
@@ -83,28 +80,26 @@ public:
 
     /**
      * @brief Cria o evento de clicar e jogar as cartas da mão
-     * @param posicao_carta
-     * @param jogador
-     * @return true
+     * @param posicao_carta Posição da carta na mão do jogador
+     * @param jogador Jogador que terá o evento da carta adicionado em uma carta da sua mão
     */
     void jogar_carta_clique(int posicao_carta, Jogador* jogador);
 
     /**
      * @brief Organiza os procedimentos após jogar uma carta
-     * @param carta
-     * @param jogadorID
+     * @param carta Carta que foi jogada pelo jogador
+     * @param jogadorID ID do jogador que jogou a carta
     */
     void organizar_jogada(Carta* carta, int jogadorID);
 
     /**
      * @brief Movimenta a carta clicada da mão do jogador até o centro
-     * @param posicao_carta_mao
+     * @param posicao_carta_mao Posição da carta na mão do jogador
     */
     void jogar_sprite_carta(int posicao_carta_mao);
 
     /**
      * @brief Cria a interface para o jogador selecionar a cor do coringa
-     * @return true
     */
     void criar_interface_cor();
 
@@ -113,6 +108,9 @@ public:
     */
     void cria_interface_uno();
 
+    /**
+     * @brief Função que cria a Interface
+    */
     CREATE_FUNC(Interface);
 
 
