@@ -30,9 +30,14 @@ public:
     virtual bool init(); 
 
     /**
-     * @brief Realiza ações durante o jogo
+     * @brief Realiza as ações de jogar carta do bot
     */
-    void update(float) override;
+    void jogar_carta_bot(float dt);
+
+    /**
+     * @brief Inicializa a jogada de cartas do bot
+    */
+    void inicializa_jogar_carta_bot(float dt);
 
     /**
      * @brief Destroi o sistema após o fime do programa
@@ -84,7 +89,6 @@ public:
      * @param jogador Jogador que terá o evento da carta adicionado em uma carta da sua mão
     */
     void jogar_carta_clique(int posicao_carta, Jogador* jogador);
-
     /**
      * @brief Organiza os procedimentos após jogar uma carta
      * @param carta Carta que foi jogada pelo jogador

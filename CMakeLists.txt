@@ -57,9 +57,6 @@ endif()
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
      Classes/src/cartas/cartas.cpp
-     Classes/src/cartas/cartasNumericas.cpp
-     Classes/src/cartas/cartasEspeciais.cpp
-     Classes/src/cartas/cartasEspeciaisPretas.cpp
      Classes/src/baralho/baralho.cpp
      Classes/src/baralho/maoJogador.cpp
      Classes/src/baralho/monteCartasComer.cpp
@@ -76,9 +73,6 @@ list(APPEND GAME_SOURCE
      )
 list(APPEND GAME_HEADER
      Classes/include/cartas/cartas.hpp
-     Classes/include/cartas/cartasNumericas.hpp
-     Classes/include/cartas/cartasEspeciais.hpp
-     Classes/include/cartas/cartasEspeciaisPretas.hpp
      Classes/include/baralho/baralho.hpp
      Classes/include/baralho/maoJogador.hpp
      Classes/include/baralho/monteCartasComer.hpp

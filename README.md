@@ -58,7 +58,7 @@ O jogo continua até que um jogador descarte todas as suas cartas, assim finaliz
 
 ## User Stories
 
-* Como jogador, quero ter a opção de selecionar quantos bots irão participar da partida, para que eu possa escolher entre até 8 participantes no total;
+* Como jogador, quero ter a opção de selecionar quantos bots irão participar da partida, para que eu possa escolher entre até 4 participantes no total;
 * Como jogador, quero que as cartas sejam apresentadas como elementos visuais na tela, para que eu consiga visualizar a minha mão e o número de cartas dos oponentes; 
 * Como jogador, quero ter a possibilidade de escolher entre uma das cartas em minha mão, para que eu possa realizar minha jogada;
 * Como jogador, quero ter a possibilidade de comprar cartas para realizar uma jogada (nos casos em que não tenho nenhuma carta válida na mão);

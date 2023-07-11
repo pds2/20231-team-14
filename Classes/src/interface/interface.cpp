@@ -26,13 +26,20 @@ bool Interface::init(){
     }
 
     posicao_carta_bot = 0;
-    
-    this->scheduleUpdate();
+
+    this->schedule(CC_SCHEDULE_SELECTOR(Interface::inicializa_jogar_carta_bot), 1.0f);
 
     return true;
 }
 
-void Interface::update(float){
+
+void Interface::inicializa_jogar_carta_bot(float dt){
+    unschedule(CC_SCHEDULE_SELECTOR(Interface::inicializa_jogar_carta_bot));
+
+    schedule(CC_SCHEDULE_SELECTOR(Interface::jogar_carta_bot), 1.0f);
+}
+
+void Interface::jogar_carta_bot(float dt){
     if(sistema->get_ciclo()->get_jogador_atual()->is_bot()){
         if(posicao_carta_bot < sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_numero_de_cartas()){
             organizar_jogada(sistema->get_ciclo()->get_jogador_atual()->get_mao()->get_carta(posicao_carta_bot), sistema->get_ciclo()->get_jogador_atual()->get_id());
@@ -159,6 +166,8 @@ void Interface::organizar_jogada(Carta* carta, int jogadorID){
                 sprites.muda_cor_curinga(sistema->get_monte_jogadas()->mostrar_topo(),cor);
                 escolhendo_cor = false;
             }
+
+            if(quantidade_cartas_comprar > 0) sistema->get_ciclo()->proximo_jogador();
 
             sistema->get_ciclo()->proximo_jogador();
 

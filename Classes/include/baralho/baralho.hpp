@@ -3,9 +3,6 @@
 
 #include <vector>
 #include "../cartas/cartas.hpp"
-#include "../cartas/cartasNumericas.hpp"
-#include "../cartas/cartasEspeciais.hpp"
-#include "../cartas/cartasEspeciaisPretas.hpp"
 
 class IndiceInvalido_e {};
 
